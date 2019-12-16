@@ -8,16 +8,19 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
     HashMap<User, ArrayList<Card>> mapa = new HashMap<>();
 
-    public PrePaidCardManager() {
-    	
-    	
+    public PrePaidCardManager() {   	
     	
     }
 
-    Integer hola = 5;
-    hola
     public void createUser(String name, String surname) {
-
+    	
+    	//check if the user is already registered
+    	mapa.put(new User(name,surname), new ArrayList<Card>());
+    	
+    }
+    
+    public void buyCard(User user, Card card) {
+    	
     }
 
 }
