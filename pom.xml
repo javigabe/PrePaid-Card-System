@@ -12,7 +12,7 @@
 <sonar.login>170071</sonar.login>
 <sonar.password>79145528</sonar.password>
 <sonar.host.url>http://costa.ls.fi.upm.es:9000/sonar</sonar.host.url>
-<sonar.projectName>mini-project-${sonar.login}</sonar.projectName>
+<sonar.projectName>prepaid-Card-System-${sonar.login}</sonar.projectName>
 <sonar.projectKey>
 ${project.groupId}:${project.artifactId}:${sonar.projectName}
 </sonar.projectKey>
