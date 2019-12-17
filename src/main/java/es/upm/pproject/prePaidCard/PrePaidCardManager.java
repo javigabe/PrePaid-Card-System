@@ -19,11 +19,12 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     	
     }
     
-    public void buyCard(User user, Card card) {
+    public boolean buyCard(User user, Card card) {
     	if(mapa.containsKey(user)) {
     		mapa.get(user).add(card);
+    		return true;
     	}
-    		
+    	return false;
     }
 
 }

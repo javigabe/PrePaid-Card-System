@@ -82,7 +82,11 @@ public class Card {
 		Date today = new Date();
 		if (today.before(expirationDate)) {
 			if (this.pin == pin) {
-				return events.toString();
+				String print = "";
+				for (int i = 0; i < events.size(); i++) {
+					print += events.get(i).print();
+				}
+				return print;
 			}
 			return "Incorrect pin";								//incorrect pin
 		}

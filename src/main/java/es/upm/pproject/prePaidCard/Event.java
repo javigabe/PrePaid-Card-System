@@ -11,4 +11,11 @@ public class Event {
 		this.date = date;
 		this.amount = amount;
 	}
+	
+	public String print() {
+		String res = "";
+		res += date.toString() + "   ";
+		res += amount + "\r\n";		
+		return res;
+	}
 }
