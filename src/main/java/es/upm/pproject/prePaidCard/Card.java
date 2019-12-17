@@ -84,8 +84,8 @@ public class Card {
 			if (this.pin == pin) {
 				return events.toString();
 			}
-			return "incorrect pin";								//incorrect pin
+			return "Incorrect pin";								//incorrect pin
 		}
-		return "incorrect card";								//expired card
+		return "Incorrect card";								//expired card
 	}
 }

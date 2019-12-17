@@ -1,5 +1,6 @@
 package es.upm.pproject.prePaidCard;
 
+
 public class User {
 
     String name;
@@ -9,4 +10,6 @@ public class User {
         this.name = name;
         this.surname = surname;
     }
+    
+    
 }
