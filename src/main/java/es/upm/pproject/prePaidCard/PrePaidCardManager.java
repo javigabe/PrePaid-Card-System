@@ -7,24 +7,72 @@ import java.util.HashMap;
 public class PrePaidCardManager implements PrePaidCardInterface {
 
     HashMap<User, ArrayList<Card>> mapa = new HashMap<>();
+    long cardNumber = 0;
+    
 
     public PrePaidCardManager() {   	
     	
     }
 
-    public void createUser(String name, String surname) {
+    //method to register a new user in the system
+    public User createUser(String name, String surname) {
     	
     	//check if the user is already registered
-    	mapa.put(new User(name,surname), new ArrayList<Card>());
-    	
+    	User newUser = new User(name,surname);
+    	mapa.put(newUser, new ArrayList<Card>());
+    	return newUser;
     }
     
-    public boolean buyCard(User user, Card card) {
+    //method to register a new card for a user
+    public boolean buyCard(User user, int balance, int pin) {
     	if(mapa.containsKey(user)) {
-    		mapa.get(user).add(card);
+    		Card newCard = new Card(cardNumber,balance,pin);
+    		mapa.get(user).add(newCard);
+    		cardNumber++;
     		return true;
     	}
     	return false;
     }
-
+    
+    //method to charge a card
+    public int chargeCard(User user, long idNumber, int pin, int amount) {
+    	if(mapa.containsKey(user)) {
+    		ArrayList<Card> cards = mapa.get(user);
+    		for (int i = 0; i<cards.size(); i++) {
+    			if (cards.get(i).getId() == idNumber) {
+    				return cards.get(i).charge(pin, amount);
+    			}
+    		}
+    		return -4;								//the card is not registered
+    	}
+    	return -3;									//the user is not registered
+    }
+    
+    //method to pay with a card
+    public int payCard(User user, long idNumber, int pin, int amount) {
+    	if(mapa.containsKey(user)) {
+    		ArrayList<Card> cards = mapa.get(user);
+    		for (int i = 0; i<cards.size(); i++) {
+    			if (cards.get(i).getId() == idNumber) {
+    				return cards.get(i).pay(pin, amount);
+    			}
+    		}
+    		return -4;								//the card is not registered
+    	}
+    	return -3;									//the user is not registered
+    }
+    
+    //method to change the pin
+    public int changePin(User user, long idNumber, int oldPin, int newPin) {
+    	if(mapa.containsKey(user)) {
+    		ArrayList<Card> cards = mapa.get(user);
+    		for (int i = 0; i<cards.size(); i++) {
+    			if (cards.get(i).getId() == idNumber) {
+    				return cards.get(i).changePin(oldPin, newPin);
+    			}
+    		}
+    		return -4;								//the card is not registered
+    	}
+    	return -3;									//the user is not registered
+    }
 }
