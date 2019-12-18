@@ -24,7 +24,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     }
     
     //method to register a new card for a user
-    public boolean buyCard(User user, int balance, int pin) {
+    public boolean buyCard(User user, int balance, String pin) {
     	if(mapa.containsKey(user)) {
     		Card newCard = new Card(cardNumber,balance,pin);
     		mapa.get(user).add(newCard);
@@ -35,7 +35,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     }
     
     //method to charge a card
-    public int chargeCard(User user, long idNumber, int pin, int amount) {
+    public int chargeCard(User user, long idNumber, String pin, int amount) {
     	if(mapa.containsKey(user)) {
     		ArrayList<Card> cards = mapa.get(user);
     		for (int i = 0; i<cards.size(); i++) {
@@ -49,7 +49,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     }
     
     //method to pay with a card
-    public int payCard(User user, long idNumber, int pin, int amount) {
+    public int payCard(User user, long idNumber, String pin, int amount) {
     	if(mapa.containsKey(user)) {
     		ArrayList<Card> cards = mapa.get(user);
     		for (int i = 0; i<cards.size(); i++) {
@@ -63,7 +63,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     }
     
     //method to change the pin
-    public int changePin(User user, long idNumber, int oldPin, int newPin) {
+    public int changePin(User user, long idNumber, String oldPin, String newPin) {
     	if(mapa.containsKey(user)) {
     		ArrayList<Card> cards = mapa.get(user);
     		for (int i = 0; i<cards.size(); i++) {
