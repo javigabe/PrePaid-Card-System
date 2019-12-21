@@ -8,18 +8,18 @@ import java.io.*;
 
 public class Card {
 
-	private long IDnumber;
-	private int balance;
-	private String pin;													//in the user?
+	private Long IDnumber;
+	private Integer balance;
+	String pin;													//in the user?
 	private ArrayList<Event> events;
 	private Date expirationDate;
 	private String owner;
 	
 	//constructor
-	public Card(long IDnumber, int balance, String pin, String owner) {
+	public Card(Long IDnumber, Integer balance, String pin, String owner) {
 		this.IDnumber = IDnumber;
 		this.balance = balance;
-		this.pin = cipher(pin);									// hash function
+		this.pin = pin;									// hash function
 		this.owner = owner;
 		events = new ArrayList<>();
 		expirationDate = new Date();							//Today´s date
@@ -27,19 +27,19 @@ public class Card {
 	}
 		
 	//method to consult the balances
-	public int consultBalance (String pin) throws WrongPINException {
+	public Integer consultBalance (String pin) throws WrongPINException {
 		
-		if (this.pin.equals(cipher(pin))) {
-			return balance;
+		if (!checkPin(pin)) {
+			throw new WrongPINException();												//incorrect pin
 		}
 		else {
-			throw new WrongPINException();												//incorrect pin
+			return balance;
 		}
 	}
 		
 	
 	//method to charge some amount of money
-	public int charge (String pin, int amount) throws ExpiredCardException, WrongPINException {
+	public Integer charge (String pin, Integer amount) throws ExpiredCardException, WrongPINException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();		// wrong pin
 		}
@@ -57,7 +57,7 @@ public class Card {
 	}
 	
 	//method to pay some amount of money
-	public int pay (String pin, int amount) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
+	public Integer pay (String pin, Integer amount) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();
 		}
@@ -76,13 +76,12 @@ public class Card {
 	}
 	
 	//method to change the pin
-	public int changePin (String oldPin, String newPin) throws WrongPINException {
+	public void changePin (String oldPin, String newPin) throws WrongPINException {
 		if (!checkPin(oldPin)) {
 			throw new WrongPINException();
 		}
 		else {
-			this.pin = cipher(newPin);
-			return 0;
+			this.pin = newPin;
 		}
 	}
 	
@@ -101,11 +100,11 @@ public class Card {
 	}
 	
 	//get idNumber
-	public long getId() { return IDnumber; }
+	public Long getId() { return IDnumber; }
 
 
 	private boolean checkPin(String pin) {
-		return pin.equals(cipher(this.pin));
+		return pin.equals(this.pin);
 	}
 
 	private String cipher(String passwordToHash)

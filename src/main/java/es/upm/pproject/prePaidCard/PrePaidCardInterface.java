@@ -2,14 +2,15 @@ package es.upm.pproject.prePaidCard;
 
 public interface PrePaidCardInterface {
 	
-	public User createUser(String name, String surname);
+	//public User createUser(String name, String surname);
+    public void signIn(Long cardNumber, String pin) throws WrongPINException;
 	
-    public boolean buyCard(User user, int balance, String pin) throws UserDoesntExistException;
+    public void buyCard(String owner, Integer balance, String pin);
     
-    public int chargeCard(User user, long idNumber, String pin, int amount) throws CardDoesntExistException, UserDoesntExistException;
+    public int chargeCard(String owner, Long idNumber, String pin, Integer amount) throws CardDoesntExistException;
     
-    public int payCard(User user, long idNumber, String pin, int amount) throws UserDoesntExistException, CardDoesntExistException;
+    public int payCard(String owner, Long idNumber, String pin, Integer amount) throws  CardDoesntExistException;
     
-    public int changePin(User user, long idNumber, String oldPin, String newPin) throws UserDoesntExistException, CardDoesntExistException;
+    public int changePin(String owner, Long idNumber, String oldPin, String newPin) throws CardDoesntExistException, WrongPINException;
 	
 }
