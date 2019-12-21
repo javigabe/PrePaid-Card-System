@@ -13,82 +13,99 @@ public class Card {
 	private String pin;													//in the user?
 	private ArrayList<Event> events;
 	private Date expirationDate;
+	private String owner;
 	
 	//constructor
-	public Card(long IDnumber, int balance, String pin) {
+	public Card(long IDnumber, int balance, String pin, String owner) {
 		this.IDnumber = IDnumber;
 		this.balance = balance;
-		this.pin = cipher(pin);								// hash function
-		events = new ArrayList<Event>();
+		this.pin = cipher(pin);									// hash function
+		this.owner = owner;
+		events = new ArrayList<>();
 		expirationDate = new Date();							//Today´s date
 		expirationDate.setYear(expirationDate.getYear()+1);		//Plus one year
 	}
 		
 	//method to consult the balances
-	public int consultBalance (String pin) {
+	public int consultBalance (String pin) throws WrongPINException {
 		
 		if (this.pin.equals(cipher(pin))) {
 			return balance;
 		}
-		return -1;												//incorrect pin
+		else {
+			throw new WrongPINException();												//incorrect pin
+		}
 	}
 		
 	
 	//method to charge some amount of money
-	public int charge (String pin, int amount) {
-		if (this.pin.equals(cipher(pin))) {
+	public int charge (String pin, int amount) throws ExpiredCardException, WrongPINException {
+		if (!checkPin(pin)) {
+			throw new WrongPINException();		// wrong pin
+		}
+		else {
 			Date today = new Date();
 			if (today.before(expirationDate)) {
 				balance = balance + amount;
 				events.add(new Event(today,amount));
 				return balance;
 			}
-			return -2;											//expired card
+			else {
+				throw new ExpiredCardException();  // the card has expired
+			}
 		}
-		return -1;												//incorrect pin
 	}
 	
 	//method to pay some amount of money
-	public int pay (String pin, int amount) {
-		if (this.pin.equals(cipher(pin))) {
+	public int pay (String pin, int amount) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
+		if (!checkPin(pin)) {
+			throw new WrongPINException();
+		}
+		else {
 			Date today = new Date();
 			if (today.before(expirationDate)) {
-				if (balance >= amount) {	
+				if (balance >= amount) {
 					balance = balance - amount;
 					events.add(new Event(today,-amount));
 					return balance;
 				}
-				return -3;										//not enough money
+				else throw new NotEnoughMoneyException(); 		// not enough money
 			}
-			return -2;											//expired card
+			else throw new ExpiredCardException();			// the card has expired
 		}
-		return -1;												//incorrect pin
 	}
 	
 	//method to change the pin
-	public int changePin (String oldPin, String newPin) {
-		if (this.pin.equals(cipher(oldPin))) {
+	public int changePin (String oldPin, String newPin) throws WrongPINException {
+		if (!checkPin(oldPin)) {
+			throw new WrongPINException();
+		}
+		else {
 			this.pin = cipher(newPin);
 			return 0;
 		}
-		return -1;												//incorrect pin
 	}
 	
 	//method to consult the movements
-	public String consultMovements(String pin) {
-		if (this.pin.equals(pin)) {
-			String print = "";
-			for (int i = 0; i < events.size(); i++) {
-				print += events.get(i).print();
-			}
-			return print;
+	public String consultMovements(String pin) throws WrongPINException {
+		if (!checkPin(pin)) {
+			throw new WrongPINException();
 		}
-		return "Incorrect pin";									//incorrect pin
+		else {
+			String movements = "";
+			for (int i = 0; i < events.size(); i++) {
+				movements += events.get(i).print();
+			}
+			return movements;
+		}
 	}
 	
 	//get idNumber
-	public long getId() {
-		return IDnumber;
+	public long getId() { return IDnumber; }
+
+
+	private boolean checkPin(String pin) {
+		return pin.equals(cipher(this.pin));
 	}
 
 	private String cipher(String passwordToHash)
