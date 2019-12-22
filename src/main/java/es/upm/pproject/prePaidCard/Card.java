@@ -9,8 +9,8 @@ import java.io.*;
 public class Card {
 
 	private Long IDnumber;
-	private Integer balance;
-	String pin;													//in the user?
+	Integer balance;
+	private String pin;													//in the user?
 	private ArrayList<Event> events;
 	private Date expirationDate;
 	private String owner;
@@ -19,7 +19,7 @@ public class Card {
 	public Card(Long IDnumber, Integer balance, String pin, String owner) {
 		this.IDnumber = IDnumber;
 		this.balance = balance;
-		this.pin = pin;									// hash function
+		this.pin = cipher(pin);									// hash function
 		this.owner = owner;
 		events = new ArrayList<>();
 		expirationDate = new Date();							//Today´s date
@@ -104,7 +104,7 @@ public class Card {
 
 
 	private boolean checkPin(String pin) {
-		return pin.equals(this.pin);
+		return pin.equals(cipher(this.pin));
 	}
 
 	private String cipher(String passwordToHash)

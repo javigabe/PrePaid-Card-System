@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 public class PrePaidCardManager implements PrePaidCardInterface {
 
-    HashMap<User, ArrayList<Card>> mapa = new HashMap<>();
     long cardNumber = 0;
 
     HashMap<Long, Card> cards = new HashMap<>();
@@ -18,7 +17,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     	
     }
 
-    public void signIn(Long cardNumber, String pin) throws WrongPINException {
+    /*public void signIn(Long cardNumber, String pin) throws WrongPINException {
     	if (cards.containsKey(cardNumber)) {
 			Card card = cards.get(cardNumber);
 			if (card.pin.equals(pin)) {
@@ -33,6 +32,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     		//Card card = new Card(cardNumber, 0, PIN, owner);
 		}
 	}
+	*/
     
     //method to register a new card for a user
     public void buyCard(String owner, Integer balance, String pin) {
@@ -43,17 +43,37 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     }
     
     //method to charge a card
-    public int chargeCard(Long idNumber, String pin, Integer amount) throws CardDoesntExistException {
-
+    public Integer chargeCard(Long idNumber, String pin, Integer amount) throws CardDoesntExistException, ExpiredCardException, WrongPINException {
+    	if (!cards.containsKey(idNumber)) {
+    		throw new CardDoesntExistException();
+		}
+		else {
+    		Card card = cards.get(idNumber);
+    		card.charge(pin, amount);
+    		return amount;
+		}
     }
     
     //method to pay with a card
-    public int payCard(Long idNumber, String pin, Integer amount) throws CardDoesntExistException {
-
+    public Integer payCard(Long idNumber, String pin, Integer amount) throws CardDoesntExistException, ExpiredCardException, NotEnoughMoneyException, WrongPINException {
+		if (!cards.containsKey(idNumber)) {
+			throw new CardDoesntExistException();
+		}
+		else {
+			Card card = cards.get(idNumber);
+			card.pay(pin, amount);
+			return amount;
+		}
     }
     
     //method to change the pin
-    public int changePin(Long idNumber, String oldPin, String newPin) throws CardDoesntExistException, WrongPINException {
-
+    public void changePin(Long idNumber, String oldPin, String newPin) throws CardDoesntExistException, WrongPINException {
+		if (!cards.containsKey(idNumber)) {
+			throw new CardDoesntExistException();
+		}
+		else {
+			Card card = cards.get(idNumber);
+			card.changePin(oldPin, newPin);
+		}
     }
 }
