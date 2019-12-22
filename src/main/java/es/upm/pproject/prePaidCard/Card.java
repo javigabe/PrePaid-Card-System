@@ -9,7 +9,7 @@ import java.io.*;
 public class Card {
 
 	private Long IDnumber;
-	Integer balance;
+	private Integer balance;
 	private String pin;													//in the user?
 	private ArrayList<Event> events;
 	private Date expirationDate;

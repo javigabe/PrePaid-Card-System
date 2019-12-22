@@ -76,4 +76,25 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 			card.changePin(oldPin, newPin);
 		}
     }
+
+    public String consultMovements(Long idNumber, String pin) throws CardDoesntExistException, WrongPINException {
+		if (!cards.containsKey(idNumber)) {
+			throw new CardDoesntExistException();
+		}
+		else {
+			Card card = cards.get(idNumber);
+			String movements = card.consultMovements(pin);
+			return movements;
+		}
+	}
+
+	public Integer consultBalance(Long idNumber, String pin) throws CardDoesntExistException, WrongPINException {
+		if (!cards.containsKey(idNumber)) {
+			throw new CardDoesntExistException();
+		}
+		else {
+			Card card = cards.get(idNumber);
+			return card.consultBalance(pin);
+		}
+	}
 }
