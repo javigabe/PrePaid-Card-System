@@ -29,11 +29,10 @@ public class Card {
 	//method to consult the balances
 	public Integer consultBalance (String pin) throws WrongPINException {
 		if (!checkPin(pin)) {
-			throw new WrongPINException();												//incorrect pin
+			throw new WrongPINException();						//incorrect pin
 		}
-		else {
-			return balance;
-		}
+
+		return balance;
 	}
 		
 	
@@ -42,17 +41,16 @@ public class Card {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();		// wrong pin
 		}
-		else {
-			Date today = new Date();
-			if (today.before(expirationDate)) {
-				balance = balance + amount;
-				events.add(new Event(today,amount));
-				return balance;
-			}
-			else {
-				throw new ExpiredCardException();  // the card has expired
-			}
+
+		Date today = new Date();
+		if (!today.before(expirationDate)) {
+			throw new ExpiredCardException();
 		}
+
+		balance = balance + amount;
+		events.add(new Event(today,amount));
+		return balance;
+
 	}
 	
 	//method to pay some amount of money
@@ -60,18 +58,21 @@ public class Card {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();
 		}
-		else {
-			Date today = new Date();
-			if (today.before(expirationDate)) {
-				if (balance >= amount) {
-					balance = balance - amount;
-					events.add(new Event(today,-amount));
-					return balance;
-				}
-				else throw new NotEnoughMoneyException(); 		// not enough money
-			}
-			else throw new ExpiredCardException();			// the card has expired
+
+		Date today = new Date();
+
+		if (!today.before(expirationDate)) {
+			throw new ExpiredCardException();
 		}
+		if (balance < amount) {
+			throw new NotEnoughMoneyException();
+
+		}
+
+		balance = balance - amount;
+		events.add(new Event(today,-amount));
+		return balance;
+
 	}
 	
 	//method to change the pin
@@ -79,9 +80,9 @@ public class Card {
 		if (!checkPin(oldPin)) {
 			throw new WrongPINException();
 		}
-		else {
-			this.pin = newPin;
-		}
+
+		this.pin = cipher(newPin);
+
 	}
 	
 	//method to consult the movements
@@ -89,13 +90,12 @@ public class Card {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();
 		}
-		else {
-			String movements = "";
-			for (int i = 0; i < events.size(); i++) {
-				movements += events.get(i).print();
-			}
-			return movements;
+
+		String movements = "";
+		for (int i = 0; i < events.size(); i++) {
+			movements += events.get(i).toString();
 		}
+		return movements;
 	}
 	
 	//get idNumber

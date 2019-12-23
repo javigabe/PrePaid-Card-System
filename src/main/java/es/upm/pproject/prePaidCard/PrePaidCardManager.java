@@ -41,7 +41,6 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		Card card = cards.get(idNumber);
 		card.pay(pin, amount);
 		return amount;
-
     }
     
     public void changePin(Long idNumber, String oldPin, String newPin) throws CardDoesntExistException, WrongPINException {
@@ -51,7 +50,6 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
 		Card card = cards.get(idNumber);
 		card.changePin(oldPin, newPin);
-
     }
 
     public String consultMovements(Long idNumber, String pin) throws CardDoesntExistException, WrongPINException {

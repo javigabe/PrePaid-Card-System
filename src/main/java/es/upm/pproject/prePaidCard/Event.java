@@ -12,7 +12,7 @@ public class Event {
 		this.amount = amount;
 	}
 	
-	public String print() {
+	public String toString() {
 		String res = "";
 		res += date.toString() + "   ";
 		res += amount + "\r\n";		
