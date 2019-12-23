@@ -28,7 +28,6 @@ public class Card {
 		
 	//method to consult the balances
 	public Integer consultBalance (String pin) throws WrongPINException {
-		
 		if (!checkPin(pin)) {
 			throw new WrongPINException();												//incorrect pin
 		}
