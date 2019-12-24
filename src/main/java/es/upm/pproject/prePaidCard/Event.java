@@ -13,9 +13,6 @@ public class Event {
 	}
 	
 	public String toString() {
-		String res = "";
-		res += date.toString() + "   ";
-		res += amount + "\r\n";		
-		return res;
+		return date.toString() + "\t" + amount + "\r\n";
 	}
 }

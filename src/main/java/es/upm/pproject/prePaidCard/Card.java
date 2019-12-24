@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.security.MessageDigest;
 import java.io.*;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+
 
 public class Card {
 
@@ -14,6 +18,8 @@ public class Card {
 	private ArrayList<Event> events;
 	private Date expirationDate;
 	private String owner;
+
+	private final static Logger LOGGER = Logger.getLogger("Card");
 
 	//constructor
 	public Card(Long IDnumber, Integer balance, String pin, String owner) {
@@ -50,7 +56,6 @@ public class Card {
 		balance = balance + amount;
 		events.add(new Event(today,amount));
 		return balance;
-
 	}
 
 	//method to pay some amount of money
@@ -66,13 +71,11 @@ public class Card {
 		}
 		if (balance < amount) {
 			throw new NotEnoughMoneyException();
-
 		}
 
 		balance = balance - amount;
 		events.add(new Event(today,-amount));
 		return balance;
-
 	}
 
 	//method to change the pin
@@ -82,7 +85,6 @@ public class Card {
 		}
 
 		this.pin = cipher(newPin);
-
 	}
 
 	//method to consult the movements
@@ -136,7 +138,7 @@ public class Card {
 		}
 		catch (NoSuchAlgorithmException e)
 		{
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Proceso exitoso");
 			return null;
 		}
 	}
