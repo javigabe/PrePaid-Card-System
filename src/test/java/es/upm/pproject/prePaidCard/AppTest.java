@@ -40,4 +40,34 @@ public class AppTest {
     	Assertions.assertEquals(result, test.chargeCard(id, "1111", amount));
 	}  
 	
+    @Test
+    public void test4() {
+       	Integer amount = 1000;
+       	long id = 10;
+    	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.payCard(id, "1111", amount);});
+    }
+    
+    @Test
+    public void test5() {
+    	test.buyCard("Alvaro", 1000, "1111");
+       	Integer amount = 2000;
+       	long id = 0;
+    	Assertions.assertThrows(NotEnoughMoneyException.class, () -> {test.payCard(id, "1111", amount);});
+    }
+    
+    @Test
+    public void test6() {
+    	test.buyCard("Alvaro", 1000, "1111");
+       	Integer amount = 400;
+       	long id = 0;
+    	Assertions.assertThrows(WrongPINException.class, () -> {test.payCard(id, "1011", amount);});
+    }
+    
+    @Test
+    public void test7() {
+    	test.buyCard("Alvaro", 1000, "1111");
+       	Integer amount = 400;
+       	long id = 0;
+    	Assertions.assertThrows(WrongPINException.class, () -> {test.payCard(id, "1011", amount);});
+    }
 }

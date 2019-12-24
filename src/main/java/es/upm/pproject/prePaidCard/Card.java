@@ -109,7 +109,7 @@ public class Card {
 
 
 	private boolean checkPin(String pin) {
-		return cipher(pin).equals(this.pin);
+		return this.pin.equals(cipher(pin));
 	}
 
 
