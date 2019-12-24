@@ -15,7 +15,7 @@ public class GraphicInterface extends JFrame{
 			window.setLocation(450,125); //LOCATION
 			window.setResizable(false); //NO MAXIMIZE
 			window.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
-			window.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
+			window.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
             window.setVisible(true); //VISIBLE
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         } catch (Exception e) {
