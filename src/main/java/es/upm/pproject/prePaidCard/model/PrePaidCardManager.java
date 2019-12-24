@@ -1,4 +1,4 @@
-package es.upm.pproject.prePaidCard;
+package es.upm.pproject.prePaidCard.model;
 
 
 import java.util.HashMap;

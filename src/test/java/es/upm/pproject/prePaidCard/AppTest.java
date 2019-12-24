@@ -2,7 +2,7 @@ package es.upm.pproject.prePaidCard;
 
 
 import java.util.HashMap;
-
+import es.upm.pproject.prePaidCard.model.*;
 import org.junit.jupiter.api.*;
 
 /**

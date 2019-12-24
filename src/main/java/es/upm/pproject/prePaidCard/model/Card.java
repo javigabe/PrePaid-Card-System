@@ -1,4 +1,4 @@
-package es.upm.pproject.prePaidCard;
+package es.upm.pproject.prePaidCard.model;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
