@@ -39,8 +39,8 @@ public class PrePaidCardManager implements PrePaidCardInterface {
   			throw new CardDoesntExistException();
   		}
 
-  		  Card card = cards.get(idNumber);
-  		  return card.pay(pin, amount);
+		Card card = cards.get(idNumber);
+		return card.pay(pin, amount);
 
     }
 
@@ -75,7 +75,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
   		return card.consultBalance(pin);
   	}
   	
-  	public HashMap<Long, Card> getCards(){
+  	public HashMap<Long, Card> getCards() {
   		return cards;
   	}
 }
