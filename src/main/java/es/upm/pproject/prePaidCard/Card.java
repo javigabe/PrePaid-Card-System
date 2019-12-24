@@ -10,7 +10,7 @@ public class Card {
 
 	private long IDnumber;
 	private int balance;
-	private String pin;													//in the user?
+	private String pin;											//in the user?
 	private ArrayList<Event> events;
 	private Date expirationDate;
 	
@@ -18,7 +18,7 @@ public class Card {
 	public Card(long IDnumber, int balance, String pin) {
 		this.IDnumber = IDnumber;
 		this.balance = balance;
-		this.pin = cipher(pin);								// hash function
+		this.pin = cipher(pin);									//hash function
 		events = new ArrayList<Event>();
 		expirationDate = new Date();							//Today´s date
 		expirationDate.setYear(expirationDate.getYear()+1);		//Plus one year
@@ -91,8 +91,7 @@ public class Card {
 		return IDnumber;
 	}
 
-	private String cipher(String passwordToHash)
-	{
+	private String cipher(String passwordToHash){
 		String generatedPassword = null;
 		try {
 			// Create MessageDigest instance for MD5
