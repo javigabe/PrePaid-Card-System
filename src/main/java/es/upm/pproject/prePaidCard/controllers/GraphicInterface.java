@@ -21,11 +21,9 @@ public class GraphicInterface extends JFrame{
 			window.setResizable(false); //NO MAXIMIZE
 			window.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
 			window.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
-			window.getContentPane().setBackground(Color.CYAN); //COLOR OF WINDOW
             window.setVisible(true); //VISIBLE
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            window.getContentPane().setLayout(null);
-            //window.setLayout(null);
+            window.getContentPane().setLayout(new GridLayout (3,2));
             
             //BUTTON BUY CARD
 
@@ -84,7 +82,7 @@ public class GraphicInterface extends JFrame{
             buttonConsultBalance.setFont(new Font("Consolas", Font.BOLD, 28));
             buttonConsultBalance.setBackground(Color.WHITE);
             buttonConsultBalance.setBounds(300, 630, 400, 100);
-
+            
             window.add(buttonConsultBalance);
             
         } catch (Exception e) {
