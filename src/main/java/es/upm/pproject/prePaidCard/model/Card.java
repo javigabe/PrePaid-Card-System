@@ -42,7 +42,7 @@ public class Card {
 
 
 	//method to charge some amount of money
-	public Long charge (String pin, Integer amount) throws ExpiredCardException, WrongPINException {
+	public Long charge (String pin, long amount) throws ExpiredCardException, WrongPINException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();		// wrong pin
 		}
@@ -58,7 +58,7 @@ public class Card {
 	}
 
 	//method to pay some amount of money
-	public Long pay (String pin, Integer amount) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
+	public Long pay (String pin, long amount) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();
 		}
@@ -115,7 +115,7 @@ public class Card {
 
 
 	//hash function
-	private String cipher(String passwordToHash){
+	private String cipher(String passwordToHash) {
 		String generatedPassword = null;
 		try {
 			// Create MessageDigest instance for MD5
@@ -137,7 +137,7 @@ public class Card {
 		}
 		catch (NoSuchAlgorithmException e)
 		{
-			LOGGER.log(Level.SEVERE, "Proceso exitoso");
+			LOGGER.log(Level.SEVERE, "Fallo en cifrado");
 			return null;
 		}
 	}

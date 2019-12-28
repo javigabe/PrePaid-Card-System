@@ -2,11 +2,11 @@ package es.upm.pproject.prePaidCard.model;
 
 public interface PrePaidCardInterface {
 	
-    public void buyCard(String owner, Long balance, String pin);
+    public void buyCard(String owner, long balance, String pin);
 
-    public Long chargeCard(Long idNumber, String pin, Integer amount) throws CardDoesntExistException, ExpiredCardException, WrongPINException;
+    public Long chargeCard(Long idNumber, String pin, long amount) throws CardDoesntExistException, ExpiredCardException, WrongPINException;
 
-    public Long payCard(Long idNumber, String pin, Integer amount) throws CardDoesntExistException, ExpiredCardException, NotEnoughMoneyException, WrongPINException;
+    public Long payCard(Long idNumber, String pin, long amount) throws CardDoesntExistException, ExpiredCardException, NotEnoughMoneyException, WrongPINException;
 
     public void changePin(Long idNumber, String oldPin, String newPin) throws CardDoesntExistException, WrongPINException;
 

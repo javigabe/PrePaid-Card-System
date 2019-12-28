@@ -1,6 +1,8 @@
 package es.upm.pproject.prePaidCard.model;
 
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +16,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.File;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class PrePaidCardManager implements PrePaidCardInterface {
@@ -22,8 +25,9 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     private long cardNumber = 0;
     private HashMap<Long, Card> cards = new HashMap<>();
 
+    private final static Logger LOGGER = Logger.getLogger("Card");
 
-    public PrePaidCardManager() {
+	public PrePaidCardManager() {
 		try {
 			readJsonFromFile();
 		}
@@ -31,13 +35,14 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 			e.printStackTrace();
 		}
     }
+
     public static void main(String [] args) {
 		PrePaidCardManager pre = new PrePaidCardManager();
 	}
 
 
     // method to register a new card for a user
-    public void buyCard(String owner, Long balance, String pin) {   //change to boolean?
+    public void buyCard(String owner, long balance, String pin) {
 		Date expirationDate = new Date();
 		expirationDate.setYear(expirationDate.getYear()+1);
 		Card card = new Card(cardNumber, balance, pin, owner, expirationDate);
@@ -46,7 +51,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     }
 
     // method to charge money in a card
-    public Long chargeCard(Long idNumber, String pin, Integer amount) throws CardDoesntExistException, ExpiredCardException, WrongPINException {
+    public Long chargeCard(Long idNumber, String pin, long amount) throws CardDoesntExistException, ExpiredCardException, WrongPINException {
     	if (!cards.containsKey(idNumber)) {
     		throw new CardDoesntExistException();
 		}
@@ -56,7 +61,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     }
 
     // method pay with a card
-    public Long payCard(Long idNumber, String pin, Integer amount) throws CardDoesntExistException, ExpiredCardException, NotEnoughMoneyException, WrongPINException {
+    public Long payCard(Long idNumber, String pin, long amount) throws CardDoesntExistException, ExpiredCardException, NotEnoughMoneyException, WrongPINException {
   		if (!cards.containsKey(idNumber)) {
   			throw new CardDoesntExistException();
   		}
@@ -66,7 +71,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
     }
 
-    // method to cahnge the pin of a card
+    // method to change the pin of a card
     public void changePin(Long idNumber, String oldPin, String newPin) throws CardDoesntExistException, WrongPINException {    //change to boolean?
   		if (!cards.containsKey(idNumber)) {
   			throw new CardDoesntExistException();
@@ -101,14 +106,17 @@ public class PrePaidCardManager implements PrePaidCardInterface {
   		return cards;
   	}
 
+
 	private void readJsonFromFile() throws IOException {
 		//JSON parser object to parse read file
 		JSONParser jsonParser = new JSONParser();
 		String filePath = new File("").getAbsolutePath().concat("/.data.json");
 
+		System.out.println(filePath);
+
 		File file = new File(filePath);
 		if (!file.exists()) {
-			if (file.createNewFile()) return;
+			file.createNewFile();
 		}
 
 		try (FileReader reader = new FileReader(filePath))
@@ -130,8 +138,8 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 	}
 
 	private void parseCards(JSONArray cards) throws java.text.ParseException {
-		for(int i = 0; i < cards.size(); i++) {
-			JSONObject card = (JSONObject) cards.get(i);
+		for (Object cardObj : cards) {
+			JSONObject card = (JSONObject) cardObj;
 			Long cardNumber = (Long) card.get("number");
 			String owner = (String) card.get("owner");
 			String pin = (String) card.get("pin");
