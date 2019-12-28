@@ -26,10 +26,10 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     public Integer chargeCard(Long idNumber, String pin, Integer amount) throws CardDoesntExistException, ExpiredCardException, WrongPINException {
     	if (!cards.containsKey(idNumber)) {
     		throw new CardDoesntExistException();
-		  }
+		}
 
-		  Card card = cards.get(idNumber);
-		  return card.charge(pin, amount);
+		Card card = cards.get(idNumber);
+		return card.charge(pin, amount);
 
     }
 

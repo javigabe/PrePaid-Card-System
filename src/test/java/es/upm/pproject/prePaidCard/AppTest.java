@@ -23,13 +23,15 @@ public class AppTest {
 	}
     
     @Test
-    public void test2() throws CardDoesntExistException, ExpiredCardException, NotEnoughMoneyException, WrongPINException {
+    public void test2() {
     	test.buyCard("Alvaro", 1000, "1111");
-    	Integer amount = 100;
-    	Integer result = 900;
-    	long id = 0;
-    	Assertions.assertEquals(result, test.payCard(id, "1111", amount));
-	}  
+       	Integer amount = 2000;
+       	long id = 0;
+    	Assertions.assertThrows(NotEnoughMoneyException.class, () -> {test.payCard(id, "1111", amount);});
+       	long idExc = 10;
+    	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.payCard(idExc, "1111", amount);});
+    	//añadir un assertThrows con ExpiredCardException
+    }
 	
     @Test
     public void test3() throws CardDoesntExistException, ExpiredCardException, NotEnoughMoneyException, WrongPINException {
@@ -38,36 +40,56 @@ public class AppTest {
     	Integer result = 1100;
     	long id = 0;
     	Assertions.assertEquals(result, test.chargeCard(id, "1111", amount));
-	}  
+    	Assertions.assertThrows(WrongPINException.class, () -> {test.chargeCard(id, "111", amount);});
+    	long idExc = 10;
+    	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.chargeCard(idExc, "1111", amount);});
+    	//añadir un assertThrows con ExpiredCardException
+    }  
 	
     @Test
-    public void test4() {
-       	Integer amount = 1000;
-       	long id = 10;
-    	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.payCard(id, "1111", amount);});
+    public void test4() throws CardDoesntExistException, WrongPINException {
+    	test.buyCard("Alvaro", 1000, "1111");
+       	long id = 0;
+       	Integer result = 1000;
+    	Assertions.assertEquals(result, test.consultBalance(id, "1111"));
+    	Assertions.assertThrows(WrongPINException.class, () -> {test.consultBalance(id, "1234");});
+    	long idExc = 10;
+    	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.consultBalance(idExc, "1111");});
     }
     
     @Test
     public void test5() {
     	test.buyCard("Alvaro", 1000, "1111");
-       	Integer amount = 2000;
-       	long id = 0;
-    	Assertions.assertThrows(NotEnoughMoneyException.class, () -> {test.payCard(id, "1111", amount);});
-    }
-    
-    @Test
-    public void test6() {
-    	test.buyCard("Alvaro", 1000, "1111");
        	Integer amount = 400;
        	long id = 0;
     	Assertions.assertThrows(WrongPINException.class, () -> {test.payCard(id, "1011", amount);});
+    	long idExc = 17;
+    	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.payCard(idExc, "1011", amount);});
     }
     
     @Test
-    public void test7() {
+    public void test6() throws CardDoesntExistException, WrongPINException {
     	test.buyCard("Alvaro", 1000, "1111");
-       	Integer amount = 400;
        	long id = 0;
-    	Assertions.assertThrows(WrongPINException.class, () -> {test.payCard(id, "1011", amount);});
+    	Assertions.assertThrows(WrongPINException.class, () -> {test.changePin(id, "5612", "9999");});
+    	test.changePin(id, "1111", "9999");
+    	Integer result = 1000;
+    	Assertions.assertEquals(result, test.consultBalance(id, "9999"));
+    	long idExc = 3;
+    	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.changePin(idExc, "9999", "1111");});
+    	
+    }
+    
+    @Test
+    public void test7() throws CardDoesntExistException, WrongPINException, ExpiredCardException, NotEnoughMoneyException {
+    	test.buyCard("Alvaro", 1000, "1111");
+       	long id = 0;
+       	Integer amount = 400;
+    	test.payCard(id, "1111", amount);
+    	String result = "";
+    	test.consultMovements(id, "1111");
+    	Assertions.assertThrows(WrongPINException.class, () -> {test.consultMovements(id, "111");});
+    	long idExc = 3;
+    	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.consultMovements(idExc, "1111");});
     }
 }
