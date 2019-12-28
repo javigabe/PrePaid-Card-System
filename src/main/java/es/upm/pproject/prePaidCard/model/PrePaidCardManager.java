@@ -24,7 +24,12 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
 
     public PrePaidCardManager() {
-		readJsonFromFile();
+		try {
+			readJsonFromFile();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     public static void main(String [] args) {
 		PrePaidCardManager pre = new PrePaidCardManager();
@@ -96,12 +101,17 @@ public class PrePaidCardManager implements PrePaidCardInterface {
   		return cards;
   	}
 
-	private void readJsonFromFile() {
+	private void readJsonFromFile() throws IOException {
 		//JSON parser object to parse read file
 		JSONParser jsonParser = new JSONParser();
-		String filePath = new File("").getAbsolutePath();
+		String filePath = new File("").getAbsolutePath().concat("/.data.json");
 
-		try (FileReader reader = new FileReader(filePath.concat("/.data.json")))
+		File file = new File(filePath);
+		if (!file.exists()) {
+			if (file.createNewFile()) return;
+		}
+
+		try (FileReader reader = new FileReader(filePath))
 		{
 			//Read JSON file
 			Object obj = jsonParser.parse(reader);
