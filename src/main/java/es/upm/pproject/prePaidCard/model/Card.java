@@ -12,8 +12,8 @@ import java.util.logging.Level;
 
 public class Card {
 
-	private long IDnumber;
-	private int balance;
+	private Long IDnumber;
+	private Long balance;
 	private String pin;
 	private ArrayList<Event> events;
 	private Date expirationDate;
@@ -22,18 +22,17 @@ public class Card {
 	private final static Logger LOGGER = Logger.getLogger("Card");
 
 	//constructor
-	public Card(Long IDnumber, Integer balance, String pin, String owner) {
+	public Card(Long IDnumber, Long balance, String pin, String owner, Date expirationDate) {
 		this.IDnumber = IDnumber;
 		this.balance = balance;
-		this.pin = cipher(pin);																					// hash function
+		this.pin = cipher(pin);
 		this.owner = owner;
 		events = new ArrayList<>();
-		expirationDate = new Date();																		//Today´s date
-		expirationDate.setYear(expirationDate.getYear()+1);							//Plus one year
+		this.expirationDate = expirationDate;
 	}
 
 	//method to consult the balances
-	public Integer consultBalance (String pin) throws WrongPINException {
+	public Long consultBalance (String pin) throws WrongPINException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();						//incorrect pin
 		}
@@ -43,7 +42,7 @@ public class Card {
 
 
 	//method to charge some amount of money
-	public Integer charge (String pin, Integer amount) throws ExpiredCardException, WrongPINException {
+	public Long charge (String pin, long amount) throws ExpiredCardException, WrongPINException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();		// wrong pin
 		}
@@ -59,7 +58,7 @@ public class Card {
 	}
 
 	//method to pay some amount of money
-	public Integer pay (String pin, Integer amount) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
+	public Long pay (String pin, long amount) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();
 		}
@@ -116,7 +115,7 @@ public class Card {
 
 
 	//hash function
-	private String cipher(String passwordToHash){
+	private String cipher(String passwordToHash) {
 		String generatedPassword = null;
 		try {
 			// Create MessageDigest instance for MD5
@@ -138,7 +137,7 @@ public class Card {
 		}
 		catch (NoSuchAlgorithmException e)
 		{
-			LOGGER.log(Level.SEVERE, "Proceso exitoso");
+			LOGGER.log(Level.SEVERE, "Fallo en cifrado");
 			return null;
 		}
 	}
