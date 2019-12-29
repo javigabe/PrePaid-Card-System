@@ -52,7 +52,7 @@ public class Card {
 			throw new ExpiredCardException();
 		}
 
-		balance = balance + amount;
+		balance += amount;
 		events.add(new Event(today,amount));
 		return balance;
 	}
@@ -92,11 +92,11 @@ public class Card {
 			throw new WrongPINException();
 		}
 
-		String movements = "";
+		StringBuilder movements = new StringBuilder();
 		for (int i = 0; i < events.size(); i++) {
-			movements += events.get(i).toString();
+			movements.append(events.get(i).toString());
 		}
-		return movements;
+		return movements.toString();
 	}
 
 	//get idNumber

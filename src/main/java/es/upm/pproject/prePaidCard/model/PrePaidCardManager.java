@@ -31,6 +31,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println(cards);
     }
 
     public static void main(String [] args) {
@@ -69,7 +70,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     }
 
     // method to change the pin of a card
-    public void changePin(Long idNumber, String oldPin, String newPin) throws CardDoesntExistException, WrongPINException {    //change to boolean?
+    public void changePin(Long idNumber, String oldPin, String newPin) throws CardDoesntExistException, WrongPINException {
   		if (!cards.containsKey(idNumber)) {
   			throw new CardDoesntExistException();
   		}
@@ -109,6 +110,8 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		JSONParser jsonParser = new JSONParser();
 		String filePath = new File("").getAbsolutePath().concat("/.data.json");
 
+		System.out.println(filePath);
+
 		File file = new File(filePath);
 		if (!file.exists()) {
 			file.createNewFile();
@@ -116,7 +119,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
 		try (FileReader reader = new FileReader(filePath))
 		{
-			if (reader.read() == -1) return;
+			if (!reader.ready()) return;
 			//Read JSON file
 			Object obj = jsonParser.parse(reader);
 			JSONArray jsonfile = (JSONArray) obj;
