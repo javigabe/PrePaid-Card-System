@@ -4,13 +4,25 @@
     "owner":"Gupta",
     "pin":"abc",
     "balance":20,
-    "expDate":"12/12/2010"
+    "expDate":"12/12/2010",
+    "events":[
+      {
+        "date":"12/12/2010",
+        "amount":100
+      }
+    ]
   },
   {
     "number": 15,
     "owner":"jose",
     "pin":"abc",
     "balance":10,
-    "expDate":"12/12/2010"
+    "expDate":"12/12/2010",
+    "events":[
+      {
+        "date":"12/12/2010",
+        "amount":200
+      }
+    ]
   }
 ]
