@@ -42,30 +42,26 @@ public class Card {
 
 
 	// method to charge some amount of money
-	public Long charge (String pin, long amount) throws ExpiredCardException, WrongPINException {
+	public void charge (String pin, long amount, Date date) throws ExpiredCardException, WrongPINException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();		// wrong pin
 		}
 
-		Date today = new Date();
-		if (!today.before(expirationDate)) {
+		if (!date.before(expirationDate)) {
 			throw new ExpiredCardException();
 		}
 
 		balance += amount;
-		events.add(new Event(today,amount));
-		return balance;
+		events.add(new Event(date,amount));
 	}
 
 	// method to pay some amount of money
-	public Long pay (String pin, long amount) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
+	public void pay (String pin, long amount, Date date) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();
 		}
 
-		Date today = new Date();
-
-		if (!today.before(expirationDate)) {
+		if (!date.before(expirationDate)) {
 			throw new ExpiredCardException();
 		}
 		if (balance < amount) {
@@ -73,8 +69,7 @@ public class Card {
 		}
 
 		balance = balance - amount;
-		events.add(new Event(today,-amount));
-		return balance;
+		events.add(new Event(date,-amount));
 	}
 
 	// method to change the pin

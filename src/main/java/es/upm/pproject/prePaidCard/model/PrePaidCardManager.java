@@ -46,7 +46,11 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
 
     // method to register a new card for a user
-    public void buyCard(String owner, long balance, String pin) {
+    public void buyCard(String owner, long balance, String pin) throws WrongPINException {
+		if (pin.length() != 4) {
+			throw new WrongPINException();
+		}
+
 		Date expirationDate = new Date();
 		expirationDate.setYear(expirationDate.getYear()+1);
 		Card card = new Card(cardNumber, balance, pin, owner, expirationDate);
@@ -56,29 +60,41 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     }
 
     // method to charge money in a card
-    public Long chargeCard(Long idNumber, String pin, long amount) throws CardDoesntExistException, ExpiredCardException, WrongPINException {
+    public void chargeCard(Long idNumber, String pin, long amount) throws CardDoesntExistException, ExpiredCardException, WrongPINException {
     	if (!cards.containsKey(idNumber)) {
     		throw new CardDoesntExistException();
 		}
 
-		return cards.get(idNumber).charge(pin, amount);
+		Date date = new Date();
+		cards.get(idNumber).charge(pin, amount, date);
+		changeStoredBalance(idNumber, amount);
+		addStoredEvent(idNumber, date, amount);
     }
 
     // method pay with a card
-    public Long payCard(Long idNumber, String pin, long amount) throws CardDoesntExistException, ExpiredCardException, NotEnoughMoneyException, WrongPINException {
+    public void payCard(Long idNumber, String pin, long amount) throws CardDoesntExistException, ExpiredCardException, NotEnoughMoneyException, WrongPINException {
   		if (!cards.containsKey(idNumber)) {
   			throw new CardDoesntExistException();
   		}
 
-		return cards.get(idNumber).pay(pin, amount);
-    }
+  		Date date = new Date();
+		cards.get(idNumber).pay(pin, amount, date);
+		changeStoredBalance(idNumber, -amount);
+		addStoredEvent(idNumber, date, -amount);
+	}
 
     // method to change the pin of a card
     public void changePin(Long idNumber, String oldPin, String newPin) throws CardDoesntExistException, WrongPINException {
   		if (!cards.containsKey(idNumber)) {
   			throw new CardDoesntExistException();
   		}
+
+  		if (newPin.length() != 4) {
+  			throw new WrongPINException();
+		}
+
 		cards.get(idNumber).changePin(oldPin, newPin);
+  		changeStoredPIN(idNumber, newPin);
     }
 
     // method to consult the movements of the current session for a card
@@ -210,7 +226,70 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 			e.printStackTrace();
 		}
 	}
-	
+
+	private void changeStoredBalance(Long cardNumber, Long amount) {
+		String filePath = getFilePath();
+		JSONArray storage = getStorage(filePath);
+
+		for (Object cardObj: storage) {
+			JSONObject card = (JSONObject) cardObj;
+			Long cardID = (Long) card.get("number");
+			if (!cardID.equals(cardNumber)) continue;
+			Long balance = (Long) card.get("balance");
+			card.put("balance", balance + amount);
+		}
+
+		try (FileWriter file = new FileWriter(filePath)) {
+			file.write(storage.toJSONString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void changeStoredPIN(Long cardNumber, String newPin) {
+		String filePath = getFilePath();
+		JSONArray storage = getStorage(filePath);
+
+		for (Object cardObj: storage) {
+			JSONObject card = (JSONObject) cardObj;
+			Long cardID = (Long) card.get("number");
+			if (!cardID.equals(cardNumber)) continue;
+			card.put("pin", cipher(newPin));
+		}
+
+		try (FileWriter file = new FileWriter(filePath)) {
+			file.write(storage.toJSONString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void addStoredEvent(Long cardNumber, Date eventDate, Long amount) {
+		String filePath = getFilePath();
+		JSONArray storage = getStorage(filePath);
+
+		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+		String date = DATE_FORMAT.format(eventDate);
+
+		JSONObject event = new JSONObject();
+		event.put("date", date);
+		event.put("amount", amount);
+
+		for (Object cardObj: storage) {
+			JSONObject card = (JSONObject) cardObj;
+			Long cardID = (Long) card.get("number");
+			if (!cardID.equals(cardNumber)) continue;
+			JSONArray events = (JSONArray) card.get("events");
+			events.add(event);
+		}
+
+		try (FileWriter file = new FileWriter(filePath)) {
+			file.write(storage.toJSONString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	private String cipher(String passwordToHash) {
 		try {

@@ -23,7 +23,7 @@ public class AppTest {
 	}
     
     @Test
-    public void test2() {
+    public void test2() throws WrongPINException {
     	test.buyCard("Alvaro", (long) 1000, "1111");
        	Long amount = Long.valueOf(2000);
        	long id = 0;
@@ -58,7 +58,7 @@ public class AppTest {
     }
     
     @Test
-    public void test5() {
+    public void test5() throws WrongPINException {
     	test.buyCard("Alvaro", (long) 1000, "1111");
        	Integer amount = 400;
        	long id = 0;
