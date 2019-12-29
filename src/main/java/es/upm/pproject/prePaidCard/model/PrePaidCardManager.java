@@ -25,7 +25,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
     private long cardNumber = 0;
     private HashMap<Long, Card> cards = new HashMap<>();
-	private final static Logger LOGGER = Logger.getLogger("Card");
+	private final static Logger LOGGER = Logger.getLogger("Manager");
 
 
 	public PrePaidCardManager() {
@@ -42,23 +42,22 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
     public static void main(String [] args) {
 		PrePaidCardManager pre = new PrePaidCardManager();
-
 	}
 
 
     // method to register a new card for a user
-    public Card buyCard(String owner, long balance, String pin) throws WrongPINException {
+    public long buyCard(String owner, long balance, String pin) throws WrongPINException {
 		if (pin.length() != 4) {
 			throw new WrongPINException();
 		}
 
 		Date expirationDate = new Date();
 		expirationDate.setYear(expirationDate.getYear()+1);
-		Card card = new Card(cardNumber, balance, pin, owner, expirationDate);
+		Card card = new Card(cardNumber, balance, cipher(pin), owner, expirationDate);
 		cards.put(cardNumber, card);
 		storeCard(cardNumber, owner, balance, pin, expirationDate);
 		cardNumber++;
-		return card;
+		return cardNumber - 1;
     }
 
     // method to charge money in a card
@@ -129,9 +128,9 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		File file = new File(filePath);
 		if (!file.exists()) {
 			try {
-				file.createNewFile();
+				if (file.createNewFile()) return file.getAbsolutePath();
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOGGER.log(Level.SEVERE, "Error");
 			}
 		}
 		return filePath;
@@ -146,11 +145,11 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 			return (JSONArray) jsonParser.parse(reader);
 
 		} catch (ParseException e) {
-			//e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error");
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error");
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error");
 		}
 		return null;
 	}
@@ -164,14 +163,16 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 			if (storage == null) return;
 			parseCards(storage);
 		} catch (java.text.ParseException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error");
 		}
 	}
 
 	private void parseCards(JSONArray cards) throws java.text.ParseException {
+		long biggestCardNumber = 0;
 		for (Object cardObj : cards) {
 			// JSON object contaning the fields of the card
 			JSONObject card = (JSONObject) cardObj;
+
 
 			// We parse all the fields of the card
 			Long cardNumber = (Long) card.get("number");
@@ -183,12 +184,15 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
 			Card storedCard = new Card(cardNumber, balance, pin, owner, expirationDate);
 
+			biggestCardNumber = biggestCardNumber < cardNumber ? cardNumber : biggestCardNumber;
+
 			// Parses all the events of the card and stores them in the events array
 			JSONArray cardEvents = (JSONArray) card.get("events");
 			parseCardEvents(cardEvents, storedCard);
 
 			this.cards.put(cardNumber, storedCard);
 		}
+		this.cardNumber = biggestCardNumber + 1;
 	}
 
 	private void parseCardEvents(JSONArray cardEvents, Card card) throws java.text.ParseException {
@@ -227,7 +231,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 			storage.add(card);
 			file.write(storage.toJSONString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error");
 		}
 	}
 
@@ -248,7 +252,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		try (FileWriter file = new FileWriter(filePath)) {
 			file.write(storage.toJSONString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error");
 		}
 	}
 
@@ -268,7 +272,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		try (FileWriter file = new FileWriter(filePath)) {
 			file.write(storage.toJSONString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error");
 		}
 	}
 
@@ -296,7 +300,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		try (FileWriter file = new FileWriter(filePath)) {
 			file.write(storage.toJSONString());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Error");
 		}
 	}
 

@@ -25,7 +25,7 @@ public class Card {
 	public Card(Long IDnumber, Long balance, String pin, String owner, Date expirationDate) {
 		this.IDnumber = IDnumber;
 		this.balance = balance;
-		this.pin = cipher(pin);
+		this.pin = pin;
 		this.owner = owner;
 		events = new ArrayList<>();
 		this.expirationDate = expirationDate;
