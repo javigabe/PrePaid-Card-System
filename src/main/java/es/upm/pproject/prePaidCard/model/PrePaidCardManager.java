@@ -16,8 +16,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class PrePaidCardManager implements PrePaidCardInterface {
@@ -25,7 +23,6 @@ public class PrePaidCardManager implements PrePaidCardInterface {
     private long cardNumber = 0;
     private HashMap<Long, Card> cards = new HashMap<>();
 
-    private final static Logger LOGGER = Logger.getLogger("Card");
 
 	public PrePaidCardManager() {
 		try {
@@ -112,8 +109,6 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		JSONParser jsonParser = new JSONParser();
 		String filePath = new File("").getAbsolutePath().concat("/.data.json");
 
-		System.out.println(filePath);
-
 		File file = new File(filePath);
 		if (!file.exists()) {
 			file.createNewFile();
@@ -121,6 +116,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
 		try (FileReader reader = new FileReader(filePath))
 		{
+			if (reader.read() == -1) return;
 			//Read JSON file
 			Object obj = jsonParser.parse(reader);
 			JSONArray jsonfile = (JSONArray) obj;
