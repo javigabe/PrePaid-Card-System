@@ -77,7 +77,6 @@ public class AppTest {
     	Assertions.assertEquals(result, test.consultBalance(id, "9999"));
     	long idExc = 3;
     	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.changePin(idExc, "9999", "1111");});
-    	
     }
     
     @Test
