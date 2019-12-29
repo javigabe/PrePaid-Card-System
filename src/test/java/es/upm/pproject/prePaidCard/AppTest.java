@@ -39,7 +39,8 @@ public class AppTest {
     	Long amount = Long.valueOf(100);
     	Long result = Long.valueOf(1100);
     	long id = 0;
-    	Assertions.assertEquals(result, test.chargeCard(id, "1111", amount));
+		test.chargeCard(id, "1111", amount);
+    	Assertions.assertEquals(result, test.consultBalance(id, "1111"));
     	Assertions.assertThrows(WrongPINException.class, () -> {test.chargeCard(id, "111", amount);});
     	long idExc = 10;
     	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.chargeCard(idExc, "1111", amount);});

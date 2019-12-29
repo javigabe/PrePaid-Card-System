@@ -42,11 +42,12 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
     public static void main(String [] args) {
 		PrePaidCardManager pre = new PrePaidCardManager();
+
 	}
 
 
     // method to register a new card for a user
-    public void buyCard(String owner, long balance, String pin) throws WrongPINException {
+    public Card buyCard(String owner, long balance, String pin) throws WrongPINException {
 		if (pin.length() != 4) {
 			throw new WrongPINException();
 		}
@@ -57,6 +58,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		cards.put(cardNumber, card);
 		storeCard(cardNumber, owner, balance, pin, expirationDate);
 		cardNumber++;
+		return card;
     }
 
     // method to charge money in a card
@@ -144,7 +146,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 			return (JSONArray) jsonParser.parse(reader);
 
 		} catch (ParseException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -160,7 +162,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		try {
 			JSONArray storage = getStorage(filePath);
 			if (storage == null) return;
-			parseCards(getStorage(filePath));
+			parseCards(storage);
 		} catch (java.text.ParseException e) {
 			e.printStackTrace();
 		}
@@ -219,6 +221,8 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
 		JSONArray storage = getStorage(filePath);
 
+		if (storage == null) storage = new JSONArray();
+
 		try (FileWriter file = new FileWriter(filePath)) {
 			storage.add(card);
 			file.write(storage.toJSONString());
@@ -230,6 +234,8 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 	private void changeStoredBalance(Long cardNumber, Long amount) {
 		String filePath = getFilePath();
 		JSONArray storage = getStorage(filePath);
+		if (storage == null) storage = new JSONArray();
+
 
 		for (Object cardObj: storage) {
 			JSONObject card = (JSONObject) cardObj;
@@ -249,6 +255,8 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 	private void changeStoredPIN(Long cardNumber, String newPin) {
 		String filePath = getFilePath();
 		JSONArray storage = getStorage(filePath);
+		if (storage == null) storage = new JSONArray();
+
 
 		for (Object cardObj: storage) {
 			JSONObject card = (JSONObject) cardObj;
@@ -267,6 +275,8 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 	private void addStoredEvent(Long cardNumber, Date eventDate, Long amount) {
 		String filePath = getFilePath();
 		JSONArray storage = getStorage(filePath);
+		if (storage == null) storage = new JSONArray();
+
 
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 		String date = DATE_FORMAT.format(eventDate);
