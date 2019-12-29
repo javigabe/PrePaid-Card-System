@@ -15,13 +15,13 @@ public class Card {
 	private Long IDnumber;
 	private Long balance;
 	private String pin;
-	private ArrayList<Event> events;
+	ArrayList<Event> events;
 	private Date expirationDate;
 	private String owner;
 
 	private final static Logger LOGGER = Logger.getLogger("Card");
 
-	//constructor
+
 	public Card(Long IDnumber, Long balance, String pin, String owner, Date expirationDate) {
 		this.IDnumber = IDnumber;
 		this.balance = balance;
@@ -31,7 +31,7 @@ public class Card {
 		this.expirationDate = expirationDate;
 	}
 
-	//method to consult the balances
+	// method to consult the balances
 	public Long consultBalance (String pin) throws WrongPINException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();						//incorrect pin
@@ -41,7 +41,7 @@ public class Card {
 	}
 
 
-	//method to charge some amount of money
+	// method to charge some amount of money
 	public Long charge (String pin, long amount) throws ExpiredCardException, WrongPINException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();		// wrong pin
@@ -52,12 +52,12 @@ public class Card {
 			throw new ExpiredCardException();
 		}
 
-		balance = balance + amount;
+		balance += amount;
 		events.add(new Event(today,amount));
 		return balance;
 	}
 
-	//method to pay some amount of money
+	// method to pay some amount of money
 	public Long pay (String pin, long amount) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();
@@ -77,7 +77,7 @@ public class Card {
 		return balance;
 	}
 
-	//method to change the pin
+	// method to change the pin
 	public void changePin (String oldPin, String newPin) throws WrongPINException {
 		if (!checkPin(oldPin)) {
 			throw new WrongPINException();
@@ -86,20 +86,19 @@ public class Card {
 		this.pin = cipher(newPin);
 	}
 
-	//method to consult the movements
+	// method to consult the movements
 	public String consultMovements(String pin) throws WrongPINException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();
 		}
 
-		String movements = "";
+		StringBuilder movements = new StringBuilder();
 		for (int i = 0; i < events.size(); i++) {
-			movements += events.get(i).toString();
+			movements.append(events.get(i).toString());
 		}
-		return movements;
+		return movements.toString();
 	}
 
-	//get idNumber
 	public Long getId() {
 		return IDnumber;
 	}
@@ -108,7 +107,6 @@ public class Card {
 		return owner;
 	}
 
-
 	private boolean checkPin(String pin) {
 		return this.pin.equals(cipher(pin));
 	}
@@ -116,7 +114,6 @@ public class Card {
 
 	//hash function
 	private String cipher(String passwordToHash) {
-		String generatedPassword = null;
 		try {
 			// Create MessageDigest instance for MD5
 			MessageDigest md = MessageDigest.getInstance("MD5");
@@ -132,8 +129,7 @@ public class Card {
 				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
 			}
 			//Get complete hashed password in hex format
-			generatedPassword = sb.toString();
-			return generatedPassword;
+			return sb.toString();
 		}
 		catch (NoSuchAlgorithmException e)
 		{
