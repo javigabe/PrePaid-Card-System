@@ -1,11 +1,14 @@
 package es.upm.pproject.prePaidCard.model;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.json.simple.JSONArray;
@@ -14,12 +17,15 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.util.Iterator;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 
 public class PrePaidCardManager implements PrePaidCardInterface {
 
     private long cardNumber = 0;
     private HashMap<Long, Card> cards = new HashMap<>();
+	private final static Logger LOGGER = Logger.getLogger("Card");
 
 
 	public PrePaidCardManager() {
@@ -31,6 +37,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 			System.out.println(card.events);
 		}
 		*/
+
     }
 
     public static void main(String [] args) {
@@ -44,6 +51,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		expirationDate.setYear(expirationDate.getYear()+1);
 		Card card = new Card(cardNumber, balance, pin, owner, expirationDate);
 		cards.put(cardNumber, card);
+		storeCard(cardNumber, owner, balance, pin, expirationDate);
 		cardNumber++;
     }
 
@@ -70,7 +78,6 @@ public class PrePaidCardManager implements PrePaidCardInterface {
   		if (!cards.containsKey(idNumber)) {
   			throw new CardDoesntExistException();
   		}
-
 		cards.get(idNumber).changePin(oldPin, newPin);
     }
 
@@ -97,24 +104,29 @@ public class PrePaidCardManager implements PrePaidCardInterface {
   	}
 
 
-  	private JSONArray getStorageFile() throws IOException {
-		JSONParser jsonParser = new JSONParser();
-
+  	private String getFilePath() {
 		// Path were our storage file is
 		String filePath = new File("").getAbsolutePath().concat("/.data.json");
 
 		File file = new File(filePath);
 		if (!file.exists()) {
-			file.createNewFile();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		return filePath;
+	}
+
+	private JSONArray getStorage(String filePath) {
+		JSONParser jsonParser = new JSONParser();
 
 		try (FileReader reader = new FileReader(filePath)) {
 			// If the file doesnt have anything to read return
 			if (!reader.ready()) return null;
+			return (JSONArray) jsonParser.parse(reader);
 
-			//Read JSON file
-			Object obj = jsonParser.parse(reader);
-			return (JSONArray) obj;
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -127,13 +139,13 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
 
 	private void readJsonFromFile() {
+		// Path were our storage file is
+		String filePath = getFilePath();
 		try {
-			JSONArray storage = getStorageFile();
+			JSONArray storage = getStorage(filePath);
 			if (storage == null) return;
-			parseCards(storage);
+			parseCards(getStorage(filePath));
 		} catch (java.text.ParseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -175,15 +187,53 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		card.events.add(new Event(date, amount));
 	}
 
-	private void storeCard() {
-		try {
-			JSONArray storage = getStorageFile();
-			if (storage == null) return;
-			parseCards(storage);
-		} catch (java.text.ParseException e) {
-			e.printStackTrace();
+	private void storeCard(long number, String owner, long balance, String pin, Date expirationDate) {
+		String filePath = getFilePath();
+
+		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+		String date = DATE_FORMAT.format(expirationDate);
+
+		JSONObject card = new JSONObject();
+		card.put("number", number);
+		card.put("owner", owner);
+		card.put("balance", balance);
+		card.put("pin", cipher(pin));
+		card.put("expDate", date);
+		card.put("events", new JSONArray());
+
+		JSONArray storage = getStorage(filePath);
+
+		try (FileWriter file = new FileWriter(filePath)) {
+			storage.add(card);
+			file.write(storage.toJSONString());
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+
+	private String cipher(String passwordToHash) {
+		try {
+			// Create MessageDigest instance for MD5
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			//Add password bytes to digest
+			md.update(passwordToHash.getBytes());
+			//Get the hash's bytes
+			byte[] bytes = md.digest();
+			//This bytes[] has bytes in decimal format;
+			//Convert it to hexadecimal format
+			StringBuilder sb = new StringBuilder();
+			for(int i=0; i< bytes.length ;i++)
+			{
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			//Get complete hashed password in hex format
+			return sb.toString();
+		}
+		catch (NoSuchAlgorithmException e)
+		{
+			LOGGER.log(Level.SEVERE, "Fallo en cifrado");
+			return null;
 		}
 	}
 }
