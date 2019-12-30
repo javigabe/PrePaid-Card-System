@@ -86,7 +86,7 @@ public class GraphicInterface extends JFrame{
                     buttonContinue.setBounds(300, 550, 400, 100);
                     buttonContinue.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                        	windowBuyCard.setVisible(false); // NOT VISIBLE MAIN WINDOW
+                        	windowBuyCard.setVisible(false); // NOT VISIBLE BUY CARD WINDOW
                         	GraphicInterface windowContinue = new GraphicInterface();
                         	windowContinue.setSize(1000,800); //SIZE OF WINDOW
                 			windowContinue.setLocation(450,125); //LOCATION
@@ -98,6 +98,11 @@ public class GraphicInterface extends JFrame{
                             windowContinue.getContentPane().setLayout(null);
                             //TEXT
                             
+                            //Dear
+                            JLabel labelDear = new JLabel("Dear "+ textOwner.getText(), JLabel.CENTER);
+                            labelDear.setFont(new Font("Consolas", Font.BOLD, 20));
+                            labelDear.setBounds(200, 180, 400, 100);
+                            windowContinue.add(labelDear);
                             
                             
                             
