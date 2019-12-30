@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import es.upm.pproject.prePaidCard.model.PrePaidCardManager;
+
 
 
 
@@ -16,6 +18,9 @@ public class GraphicInterface extends JFrame{
 	//MAIN
 	public static void main(String[] args) {
 		try {
+
+			PrePaidCardManager system= new PrePaidCardManager();
+			
 			//MAIN WINDOW
 			GraphicInterface window = new GraphicInterface();
             
@@ -38,6 +43,63 @@ public class GraphicInterface extends JFrame{
         			windowBuyCard.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
                     windowBuyCard.setVisible(true); //VISIBLE
                     windowBuyCard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    windowBuyCard.getContentPane().setLayout(null);
+                    
+                    //OWNER
+                    JLabel labelOwner = new JLabel("OWNER:", JLabel.LEFT);
+                    labelOwner.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelOwner.setBounds(200, 180, 400, 100);
+                    windowBuyCard.add(labelOwner);
+                    
+                    JTextField textOwner = new JTextField();
+                    textOwner.setFont(new Font("Consolas", Font.BOLD, 18));
+                    textOwner.setBounds(300, 200, 400, 50);
+                    windowBuyCard.add(textOwner);
+                    
+                    //PIN
+                    JLabel labelPIN = new JLabel("PIN:", JLabel.LEFT);
+                    labelPIN.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelPIN.setBounds(200, 280, 400, 100);
+                    windowBuyCard.add(labelPIN);
+                    
+                    JTextField textPIN = new JTextField();
+                    textPIN.setFont(new Font("Consolas", Font.BOLD, 18));
+                    textPIN.setBounds(300, 300, 400, 50);
+                    windowBuyCard.add(textPIN);
+                    
+                    //BALANCE
+                    JLabel labelBalance = new JLabel("AMOUNT:", JLabel.LEFT);
+                    labelBalance.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelBalance.setBounds(200, 380, 400, 100);
+                    windowBuyCard.add(labelBalance);
+                    
+                    JTextField textBalance = new JTextField();
+                    textBalance.setFont(new Font("Consolas", Font.BOLD, 18));
+                    textBalance.setBounds(300, 400, 400, 50);
+                    windowBuyCard.add(textBalance);
+                    
+                    //CONTINUE BUTTON
+                    JButton buttonContinue = new JButton("Continue");
+                    buttonContinue.setForeground(Color.BLACK);
+                    buttonContinue.setFont(new Font("Consolas", Font.BOLD, 20));
+                    buttonContinue.setBackground(Color.WHITE);
+                    buttonContinue.setBounds(300, 550, 400, 100);
+                    buttonContinue.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                        	windowBuyCard.setVisible(false); // NOT VISIBLE MAIN WINDOW
+                        	GraphicInterface windowContinue = new GraphicInterface();
+                        	windowContinue.setSize(1000,800); //SIZE OF WINDOW
+                			windowContinue.setLocation(450,125); //LOCATION
+                			windowContinue.setResizable(false); //NO MAXIMIZE
+                			windowContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
+                			windowContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
+                            windowContinue.setVisible(true); //VISIBLE
+                            windowContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                           
+                        }
+                    });         
+                    windowBuyCard.add(buttonContinue);
+                    
                     
                 }
             });
