@@ -95,6 +95,14 @@ public class GraphicInterface extends JFrame{
                             try {
 							    long number = system.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), textPIN.getText());
 							    
+							    //FILL IN THE NUMBER 
+							    String cardNumber = Long.toString(number);
+							    String nZeros= "";
+							    for(int i=0; i<(12-cardNumber.length());i++) {
+							       nZeros=nZeros+ "0";
+							    }
+							    cardNumber=nZeros+cardNumber;
+							   
                                 
 	                        	windowBuyCard.setVisible(false); // NOT VISIBLE BUY CARD WINDOW
 	                        	GraphicInterface windowContinue = new GraphicInterface();
@@ -116,7 +124,7 @@ public class GraphicInterface extends JFrame{
 	                            labelDear.setBounds(300, 180, 400, 100);
 	                            windowContinue.add(labelDear);
 	                            //CardNumber
-	                            JLabel labelCardNumber = new JLabel("Card Number: "+ Long.toString(number), JLabel.CENTER);
+	                            JLabel labelCardNumber = new JLabel("Card Number: "+ cardNumber, JLabel.CENTER);
 	                            labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
 	                            labelCardNumber.setBounds(300, 220, 400, 100);
 	                            windowContinue.add(labelCardNumber);
