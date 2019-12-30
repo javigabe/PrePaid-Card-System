@@ -85,11 +85,15 @@ public class Card {
 		}
 		return movements.toString();
 	}
-
+	
 	public Long getId() {
 		return idNumber;
 	}
-	
+
+	public Long getBalance() {
+		return balance;
+	}
+
 	public String getOwner() {
 		return owner;
 	}
