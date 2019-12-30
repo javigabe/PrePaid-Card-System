@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Card {
 
-	private Long IDnumber;
+	private Long idNumber;
 	private Long balance;
 	private String pin;
 	ArrayList<Event> events;
@@ -14,8 +14,8 @@ public class Card {
 	private Cipher cipherMethod = new Cipher();
 
 
-	public Card(Long IDnumber, Long balance, String pin, String owner, Date expirationDate) {
-		this.IDnumber = IDnumber;
+	public Card(Long idNumber, Long balance, String pin, String owner, Date expirationDate) {
+		this.idNumber = idNumber;
 		this.balance = balance;
 		this.pin = pin;
 		this.owner = owner;
@@ -87,7 +87,7 @@ public class Card {
 	}
 
 	public Long getId() {
-		return IDnumber;
+		return idNumber;
 	}
 	
 	public String getOwner() {
