@@ -92,11 +92,10 @@ public class GraphicInterface extends JFrame{
                     buttonContinue.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                         	//ACCTION
-                            long number = 0;
                             try {
-							    number = system.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), textPIN.getText());
+							    long number = system.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), textPIN.getText());
 							    
-
+                                
 	                        	windowBuyCard.setVisible(false); // NOT VISIBLE BUY CARD WINDOW
 	                        	GraphicInterface windowContinue = new GraphicInterface();
 	                        	windowContinue.setSize(1000,800); //SIZE OF WINDOW
