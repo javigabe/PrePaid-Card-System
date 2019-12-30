@@ -17,7 +17,6 @@ public class GraphicInterface extends JFrame{
 	
 	//MAIN
 	public static void main(String[] args) {
-		try {
 
 			PrePaidCardManager system= new PrePaidCardManager();
 			
@@ -78,6 +77,12 @@ public class GraphicInterface extends JFrame{
                     textBalance.setBounds(300, 400, 400, 50);
                     windowBuyCard.add(textBalance);
                     
+                    //WARNING
+                    JLabel labelWarning = new JLabel("The PIN must have 4 digits and Amount must have at least one number");
+                    labelWarning.setFont(new Font("Consolas", Font.BOLD, 16));
+                    labelWarning.setBounds(200, 700, 800, 50);
+                    windowBuyCard.add(labelWarning);
+                    
                     //CONTINUE BUTTON
                     JButton buttonContinue = new JButton("Continue");
                     buttonContinue.setForeground(Color.BLACK);
@@ -86,54 +91,70 @@ public class GraphicInterface extends JFrame{
                     buttonContinue.setBounds(300, 550, 400, 100);
                     buttonContinue.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                        	windowBuyCard.setVisible(false); // NOT VISIBLE BUY CARD WINDOW
-                        	GraphicInterface windowContinue = new GraphicInterface();
-                        	windowContinue.setSize(1000,800); //SIZE OF WINDOW
-                			windowContinue.setLocation(450,125); //LOCATION
-                			windowContinue.setResizable(false); //NO MAXIMIZE
-                			windowContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
-                			windowContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
-                            windowContinue.setVisible(true); //VISIBLE
-                            windowContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                            windowContinue.getContentPane().setLayout(null);
-                            
-                            //ACCTION
+                        	//ACCTION
                             long number = 0;
                             try {
 							    number = system.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), textPIN.getText());
-							} catch (NumberFormatException | WrongPINException e1) {
-								e1.printStackTrace();
+							    
+
+	                        	windowBuyCard.setVisible(false); // NOT VISIBLE BUY CARD WINDOW
+	                        	GraphicInterface windowContinue = new GraphicInterface();
+	                        	windowContinue.setSize(1000,800); //SIZE OF WINDOW
+	                			windowContinue.setLocation(450,125); //LOCATION
+	                			windowContinue.setResizable(false); //NO MAXIMIZE
+	                			windowContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
+	                			windowContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
+	                            windowContinue.setVisible(true); //VISIBLE
+	                            windowContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	                            windowContinue.getContentPane().setLayout(null);
+                               
+	                        
+	                            
+	                            //TEXT   
+	                            //Dear
+	                            JLabel labelDear = new JLabel("Dear "+ textOwner.getText(), JLabel.CENTER);
+	                            labelDear.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelDear.setBounds(300, 180, 400, 100);
+	                            windowContinue.add(labelDear);
+	                            //CardNumber
+	                            JLabel labelCardNumber = new JLabel("Card Number: "+ Long.toString(number), JLabel.CENTER);
+	                            labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelCardNumber.setBounds(300, 220, 400, 100);
+	                            windowContinue.add(labelCardNumber);
+	                            //Balance
+	                            JLabel labelBalance = new JLabel("Balance: "+ textBalance.getText(), JLabel.CENTER);
+	                            labelBalance.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelBalance.setBounds(300, 260, 400, 100);
+	                            windowContinue.add(labelBalance);
+	                            //Thanks for using...
+	                            JLabel labelThanks= new JLabel("Thanks for using our system", JLabel.CENTER);
+	                            labelThanks.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelThanks.setBounds(300, 300, 400, 100);
+	                            windowContinue.add(labelThanks);
+	                            
+	                            
+	                            
+	                            //HOME BUTTON
+	                            JButton buttonHome = new JButton("HOME");
+	                            buttonHome.setForeground(Color.BLACK);
+	                            buttonHome.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            buttonHome.setBackground(Color.WHITE);
+	                            buttonHome.setBounds(300, 550, 400, 100);
+	                            buttonHome.addActionListener(new ActionListener() {
+	                                public void actionPerformed(ActionEvent e) {
+	                                	window.setVisible(true); //VISIBLE MAIN WINDOW
+	                                	windowContinue.setVisible(false);
+	                                   
+	                                }
+	                            });         
+	                            windowContinue.add(buttonHome);
+	                           
+							} catch (NumberFormatException  | WrongPINException e1) {
+
+			                   // System.out.println("The PIN must have 4 digits and Amount must have at least one number");
 							}
-                            
-                            //TEXT                 
-                            //Dear
-                            JLabel labelDear = new JLabel("Dear "+ textOwner.getText(), JLabel.CENTER);
-                            labelDear.setFont(new Font("Consolas", Font.BOLD, 20));
-                            labelDear.setBounds(200, 180, 400, 100);
-                            windowContinue.add(labelDear);
-                            //CardNumber
-                            JLabel labelCardNumber = new JLabel("Card Number: "+ Long.toString(number), JLabel.CENTER);
-                            labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
-                            labelCardNumber.setBounds(200, 220, 400, 100);
-                            windowContinue.add(labelCardNumber);
-                            
-                            
-                            
-                            //HOME BUTTON
-                            JButton buttonHome = new JButton("HOME");
-                            buttonHome.setForeground(Color.BLACK);
-                            buttonHome.setFont(new Font("Consolas", Font.BOLD, 20));
-                            buttonHome.setBackground(Color.WHITE);
-                            buttonHome.setBounds(300, 550, 400, 100);
-                            buttonHome.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent e) {
-                                	window.setVisible(true); //VISIBLE MAIN WINDOW
-                                	windowContinue.setVisible(false);
-                                   
-                                }
-                            });         
-                            windowContinue.add(buttonHome);
-                           
+                        	
+
                         }
                     });         
                     windowBuyCard.add(buttonContinue);
@@ -269,10 +290,7 @@ public class GraphicInterface extends JFrame{
             window.setVisible(true); //VISIBLE
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 	}
 	
 	
