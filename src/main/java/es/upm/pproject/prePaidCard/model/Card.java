@@ -90,6 +90,10 @@ public class Card {
 		return idNumber;
 	}
 	
+	public Long getBalance() {
+		return balance;
+	}
+	
 	public String getOwner() {
 		return owner;
 	}
