@@ -1,31 +1,23 @@
 package es.upm.pproject.prePaidCard.model;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.security.MessageDigest;
-import java.io.*;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-
-
 
 public class Card {
 
-	private Long IDnumber;
+	private Long idNumber;
 	private Long balance;
 	private String pin;
 	ArrayList<Event> events;
 	private Date expirationDate;
 	private String owner;
+	private Cipher cipherMethod = new Cipher();
 
-	private final static Logger LOGGER = Logger.getLogger("Card");
 
-
-	public Card(Long IDnumber, Long balance, String pin, String owner, Date expirationDate) {
-		this.IDnumber = IDnumber;
+	public Card(Long idNumber, Long balance, String pin, String owner, Date expirationDate) {
+		this.idNumber = idNumber;
 		this.balance = balance;
-		this.pin = cipher(pin);
+		this.pin = pin;
 		this.owner = owner;
 		events = new ArrayList<>();
 		this.expirationDate = expirationDate;
@@ -42,30 +34,26 @@ public class Card {
 
 
 	// method to charge some amount of money
-	public Long charge (String pin, long amount) throws ExpiredCardException, WrongPINException {
+	public void charge (String pin, long amount, Date date) throws ExpiredCardException, WrongPINException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();		// wrong pin
 		}
 
-		Date today = new Date();
-		if (!today.before(expirationDate)) {
+		if (!date.before(expirationDate)) {
 			throw new ExpiredCardException();
 		}
 
 		balance += amount;
-		events.add(new Event(today,amount));
-		return balance;
+		events.add(new Event(date,amount));
 	}
 
 	// method to pay some amount of money
-	public Long pay (String pin, long amount) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
+	public void pay (String pin, long amount, Date date) throws WrongPINException, NotEnoughMoneyException, ExpiredCardException {
 		if (!checkPin(pin)) {
 			throw new WrongPINException();
 		}
 
-		Date today = new Date();
-
-		if (!today.before(expirationDate)) {
+		if (!date.before(expirationDate)) {
 			throw new ExpiredCardException();
 		}
 		if (balance < amount) {
@@ -73,8 +61,7 @@ public class Card {
 		}
 
 		balance = balance - amount;
-		events.add(new Event(today,-amount));
-		return balance;
+		events.add(new Event(date,-amount));
 	}
 
 	// method to change the pin
@@ -83,7 +70,7 @@ public class Card {
 			throw new WrongPINException();
 		}
 
-		this.pin = cipher(newPin);
+		this.pin = cipherMethod.cipher(newPin);
 	}
 
 	// method to consult the movements
@@ -100,7 +87,7 @@ public class Card {
 	}
 
 	public Long getId() {
-		return IDnumber;
+		return idNumber;
 	}
 	
 	public String getOwner() {
@@ -108,33 +95,6 @@ public class Card {
 	}
 
 	private boolean checkPin(String pin) {
-		return this.pin.equals(cipher(pin));
-	}
-
-
-	//hash function
-	private String cipher(String passwordToHash) {
-		try {
-			// Create MessageDigest instance for MD5
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			//Add password bytes to digest
-			md.update(passwordToHash.getBytes());
-			//Get the hash's bytes
-			byte[] bytes = md.digest();
-			//This bytes[] has bytes in decimal format;
-			//Convert it to hexadecimal format
-			StringBuilder sb = new StringBuilder();
-			for(int i=0; i< bytes.length ;i++)
-			{
-				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-			}
-			//Get complete hashed password in hex format
-			return sb.toString();
-		}
-		catch (NoSuchAlgorithmException e)
-		{
-			LOGGER.log(Level.SEVERE, "Fallo en cifrado");
-			return null;
-		}
+		return this.pin.equals(cipherMethod.cipher(pin));
 	}
 }
