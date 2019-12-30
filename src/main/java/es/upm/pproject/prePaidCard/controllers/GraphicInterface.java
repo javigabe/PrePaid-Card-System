@@ -95,6 +95,27 @@ public class GraphicInterface extends JFrame{
                 			windowContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
                             windowContinue.setVisible(true); //VISIBLE
                             windowContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            windowContinue.getContentPane().setLayout(null);
+                            //TEXT
+                            
+                            
+                            
+                            
+                            
+                            //HOME BUTTON
+                            JButton buttonHome = new JButton("HOME");
+                            buttonHome.setForeground(Color.BLACK);
+                            buttonHome.setFont(new Font("Consolas", Font.BOLD, 20));
+                            buttonHome.setBackground(Color.WHITE);
+                            buttonHome.setBounds(300, 550, 400, 100);
+                            buttonHome.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent e) {
+                                	window.setVisible(true); //VISIBLE MAIN WINDOW
+                                	windowContinue.setVisible(false);
+                                   
+                                }
+                            });         
+                            windowContinue.add(buttonHome);
                            
                         }
                     });         
