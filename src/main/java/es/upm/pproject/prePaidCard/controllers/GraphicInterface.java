@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import es.upm.pproject.prePaidCard.model.PrePaidCardManager;
+import es.upm.pproject.prePaidCard.model.*;
 
 
 
@@ -96,14 +96,26 @@ public class GraphicInterface extends JFrame{
                             windowContinue.setVisible(true); //VISIBLE
                             windowContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                             windowContinue.getContentPane().setLayout(null);
-                            //TEXT
                             
+                            //ACCTION
+                            long number = 0;
+                            try {
+							    number = system.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), textPIN.getText());
+							} catch (NumberFormatException | WrongPINException e1) {
+								e1.printStackTrace();
+							}
+                            
+                            //TEXT                 
                             //Dear
                             JLabel labelDear = new JLabel("Dear "+ textOwner.getText(), JLabel.CENTER);
                             labelDear.setFont(new Font("Consolas", Font.BOLD, 20));
                             labelDear.setBounds(200, 180, 400, 100);
                             windowContinue.add(labelDear);
-                            
+                            //CardNumber
+                            JLabel labelCardNumber = new JLabel("Card Number: "+ Long.toString(number), JLabel.CENTER);
+                            labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
+                            labelCardNumber.setBounds(200, 220, 400, 100);
+                            windowContinue.add(labelCardNumber);
                             
                             
                             
