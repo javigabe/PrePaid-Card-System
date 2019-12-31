@@ -56,10 +56,11 @@ public class GraphicInterface extends JFrame{
                     labelPIN.setFont(new Font("Consolas", Font.BOLD, 20));
                     labelPIN.setBounds(200, 280, 400, 100);
                     windowBuyCard.add(labelPIN);
-                    
-                    JTextField textPIN = new JTextField();
-                    textPIN.setFont(new Font("Consolas", Font.BOLD, 18));
-                    textPIN.setBounds(300, 300, 400, 50);
+
+
+                    JPasswordField textPIN = new JPasswordField(JLabel.LEFT);
+                    textPIN.setFont(new Font("Consolas", Font.BOLD, 20));
+                    textPIN.setBounds(300, 300, 400, 50);;
                     windowBuyCard.add(textPIN);
                     
                     //BALANCE
@@ -205,7 +206,7 @@ public class GraphicInterface extends JFrame{
                     labelPIN.setBounds(200, 280, 400, 100);
                     windowChargeCard.add(labelPIN);
                     
-                    JTextField textPIN = new JTextField();
+                    JPasswordField textPIN = new JPasswordField();
                     textPIN.setFont(new Font("Consolas", Font.BOLD, 18));
                     textPIN.setBounds(300, 300, 400, 50);
                     windowChargeCard.add(textPIN);
