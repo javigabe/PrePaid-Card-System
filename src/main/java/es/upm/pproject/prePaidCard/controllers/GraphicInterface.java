@@ -7,10 +7,6 @@ import javax.swing.*;
 
 import es.upm.pproject.prePaidCard.model.*;
 
-
-
-
-
 public class GraphicInterface extends JFrame{
 	//CONSTRUCTOR
 	public GraphicInterface() {}
