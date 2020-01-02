@@ -340,7 +340,141 @@ public class GraphicInterface extends JFrame{
         			windowPayCard.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
                     windowPayCard.setVisible(true); //VISIBLE
                     windowPayCard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                   
+                    windowPayCard.getContentPane().setLayout(null);
+                    
+                    //ID_NUMBER
+                    JLabel labelIdNumber = new JLabel("CARD NUMBER:", JLabel.LEFT);
+                    labelIdNumber.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelIdNumber.setBounds(150, 180, 400, 100);
+                    windowPayCard.add(labelIdNumber);
+                    
+                    JTextField textIdNumber  = new JTextField();
+                    textIdNumber .setFont(new Font("Consolas", Font.BOLD, 18));
+                    textIdNumber .setBounds(300, 200, 400, 50);
+                    windowPayCard.add(textIdNumber );
+                    
+                    //PIN
+                    JLabel labelPIN = new JLabel("PIN:", JLabel.LEFT);
+                    labelPIN.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelPIN.setBounds(200, 280, 400, 100);
+                    windowPayCard.add(labelPIN);
+                    
+                    JPasswordField textPIN = new JPasswordField();
+                    textPIN.setFont(new Font("Consolas", Font.BOLD, 18));
+                    textPIN.setBounds(300, 300, 400, 50);
+                    windowPayCard.add(textPIN);
+                    
+                    //AMOUNT
+                    JLabel labelAmount = new JLabel("AMOUNT:", JLabel.LEFT);
+                    labelAmount.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelAmount.setBounds(200, 380, 400, 100);
+                    windowPayCard.add(labelAmount);
+                    
+                    JTextField textAmount = new JTextField();
+                    textAmount.setFont(new Font("Consolas", Font.BOLD, 18));
+                    textAmount.setBounds(300, 400, 400, 50);
+                    windowPayCard.add(textAmount);
+                    
+                    //WARNING
+                    JLabel labelWarning = new JLabel("The PIN must have 4 digits and Amount must have at least one number");
+                    labelWarning.setFont(new Font("Consolas", Font.BOLD, 16));
+                    labelWarning.setBounds(200, 690, 800, 50);
+                    windowPayCard.add(labelWarning);
+                    JLabel labelWarning2 = new JLabel("The amount cannot be higher than the balance");
+                    labelWarning2.setFont(new Font("Consolas", Font.BOLD, 16));
+                    labelWarning2.setBounds(300, 720, 800, 50);
+                    windowPayCard.add(labelWarning2);
+                    
+                    //CONTINUE BUTTON
+                    JButton buttonContinue = new JButton("Continue");
+                    buttonContinue.setForeground(Color.BLACK);
+                    buttonContinue.setFont(new Font("Consolas", Font.BOLD, 20));
+                    buttonContinue.setBackground(Color.WHITE);
+                    buttonContinue.setBounds(300, 550, 400, 100);
+                    buttonContinue.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                        	//ACCTION
+                            try {
+                            	//PayCard
+                            	system.payCard(Long.parseLong(textIdNumber.getText()), textPIN.getText(), Long.parseLong(textAmount.getText()));
+                            	
+                                Card card = system.getCards().get(Long.parseLong(textIdNumber.getText()));
+                                long number= card.getId();
+							    
+							    //FILL IN THE NUMBER 
+							    String cardNumber = Long.toString(number);
+							    String nZeros= "";
+							    for(int i=0; i<(4-cardNumber.length());i++) {
+							       nZeros=nZeros+ "0";
+							    }
+							    cardNumber=nZeros+cardNumber;
+							   
+                                
+	                        	windowPayCard.setVisible(false); // NOT VISIBLE BUY CARD WINDOW
+	                        	GraphicInterface windowContinue = new GraphicInterface();
+	                        	windowContinue.setSize(1000,800); //SIZE OF WINDOW
+	                			windowContinue.setLocation(450,125); //LOCATION
+	                			windowContinue.setResizable(false); //NO MAXIMIZE
+	                			windowContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
+	                			windowContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
+	                            windowContinue.setVisible(true); //VISIBLE
+	                            windowContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	                            windowContinue.getContentPane().setLayout(null);
+                               
+	                        
+	                            
+	                            //TEXT   
+	                            //Dear
+	                            JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
+	                            labelDear.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelDear.setBounds(300, 180, 400, 100);
+	                            windowContinue.add(labelDear);
+	                            //Amount
+	                            JLabel labelAmount = new JLabel("Amount: "+ textAmount.getText(), JLabel.CENTER);
+	                            labelAmount.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelAmount.setBounds(300, 220, 400, 100);
+	                            windowContinue.add(labelAmount);
+	                            //CardNumber
+	                            JLabel labelCardNumber = new JLabel("Card Number: XXXX XXXX "+ cardNumber, JLabel.CENTER);
+	                            labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelCardNumber.setBounds(300, 260, 400, 100);
+	                            windowContinue.add(labelCardNumber);
+                                //Balance
+	                            JLabel labelBalance = new JLabel("Balance: "+ card.getBalance(), JLabel.CENTER);
+	                            labelBalance.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelBalance.setBounds(300, 300, 400, 100);
+	                            windowContinue.add(labelBalance);
+	                            //Thanks for using...
+	                            JLabel labelThanks= new JLabel("Thanks for using our system", JLabel.CENTER);
+	                            labelThanks.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelThanks.setBounds(300, 340, 400, 100);
+	                            windowContinue.add(labelThanks);
+	                            
+	                            
+	                            
+	                            //HOME BUTTON
+	                            JButton buttonHome = new JButton("HOME");
+	                            buttonHome.setForeground(Color.BLACK);
+	                            buttonHome.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            buttonHome.setBackground(Color.WHITE);
+	                            buttonHome.setBounds(300, 550, 400, 100);
+	                            buttonHome.addActionListener(new ActionListener() {
+	                                public void actionPerformed(ActionEvent e) {
+	                                	window.setVisible(true); //VISIBLE MAIN WINDOW
+	                                	windowContinue.setVisible(false);
+	                                   
+	                                }
+	                            });         
+	                            windowContinue.add(buttonHome);
+	                           
+							} catch (NumberFormatException  | WrongPINException | CardDoesntExistException | ExpiredCardException | NotEnoughMoneyException e1) {
+
+			                   // System.out.println("The PIN must have 4 digits and Amount must have at least one number");
+							}
+
+                        }
+                    });         
+                    windowPayCard.add(buttonContinue);      
                 }
             });
             window.add(buttonPayCard);
@@ -363,7 +497,118 @@ public class GraphicInterface extends JFrame{
         			windowChangePin.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
                     windowChangePin.setVisible(true); //VISIBLE
                     windowChangePin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                   
+                    windowChangePin.getContentPane().setLayout(null);
+                    
+                    //ID_NUMBER
+                    JLabel labelIdNumber = new JLabel("CARD NUMBER:", JLabel.LEFT);
+                    labelIdNumber.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelIdNumber.setBounds(150, 180, 400, 100);
+                    windowChangePin.add(labelIdNumber);
+                    
+                    JTextField textIdNumber  = new JTextField();
+                    textIdNumber .setFont(new Font("Consolas", Font.BOLD, 18));
+                    textIdNumber .setBounds(300, 200, 400, 50);
+                    windowChangePin.add(textIdNumber );
+                    
+                    //OLD PIN
+                    JLabel labelPIN = new JLabel("OLD PIN:", JLabel.LEFT);
+                    labelPIN.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelPIN.setBounds(200, 280, 400, 100);
+                    windowChangePin.add(labelPIN);
+                    
+                    JPasswordField textPIN = new JPasswordField();
+                    textPIN.setFont(new Font("Consolas", Font.BOLD, 18));
+                    textPIN.setBounds(300, 300, 400, 50);
+                    windowChangePin.add(textPIN);
+                    
+                    //NEW PIN
+                    JLabel labelNewPIN = new JLabel("NEW PIN:", JLabel.LEFT);
+                    labelNewPIN.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelNewPIN.setBounds(200, 380, 400, 100);
+                    windowChangePin.add(labelNewPIN);
+                    
+                    JPasswordField textNewPIN = new JPasswordField();
+                    textNewPIN.setFont(new Font("Consolas", Font.BOLD, 18));
+                    textNewPIN.setBounds(300, 400, 400, 50);
+                    windowChangePin.add(textNewPIN);
+                    
+                    //WARNING
+                    JLabel labelWarning = new JLabel("The PIN must have 4 digits");
+                    labelWarning.setFont(new Font("Consolas", Font.BOLD, 16));
+                    labelWarning.setBounds(380, 700, 800, 50);
+                    windowChangePin.add(labelWarning);
+                    
+                  //CONTINUE BUTTON
+                    JButton buttonContinue = new JButton("Continue");
+                    buttonContinue.setForeground(Color.BLACK);
+                    buttonContinue.setFont(new Font("Consolas", Font.BOLD, 20));
+                    buttonContinue.setBackground(Color.WHITE);
+                    buttonContinue.setBounds(300, 550, 400, 100);
+                    buttonContinue.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                        	//ACCTION
+                            try {
+                            	//ChangePin
+                            	system.changePin(Long.parseLong(textIdNumber.getText()), textPIN.getText(), textNewPIN.getText());
+                            	
+                                Card card = system.getCards().get(Long.parseLong(textIdNumber.getText()));
+                                long number= card.getId();
+							    
+							    //FILL IN THE NUMBER 
+							    String cardNumber = Long.toString(number);
+							    String nZeros= "";
+							    for(int i=0; i<(4-cardNumber.length());i++) {
+							       nZeros=nZeros+ "0";
+							    }
+							    cardNumber=nZeros+cardNumber;
+							   
+                                
+	                        	windowChangePin.setVisible(false); // NOT VISIBLE BUY CARD WINDOW
+	                        	GraphicInterface windowContinue = new GraphicInterface();
+	                        	windowContinue.setSize(1000,800); //SIZE OF WINDOW
+	                			windowContinue.setLocation(450,125); //LOCATION
+	                			windowContinue.setResizable(false); //NO MAXIMIZE
+	                			windowContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
+	                			windowContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
+	                            windowContinue.setVisible(true); //VISIBLE
+	                            windowContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	                            windowContinue.getContentPane().setLayout(null);
+                               
+	                        
+	                            
+	                            //TEXT 
+	                            //Thanks for using...
+	                            JLabel labelThanks= new JLabel("Thanks for using our system", JLabel.CENTER);
+	                            labelThanks.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelThanks.setBounds(300, 340, 400, 100);
+	                            windowContinue.add(labelThanks);
+	                            
+	                            
+	                            
+	                            //HOME BUTTON
+	                            JButton buttonHome = new JButton("HOME");
+	                            buttonHome.setForeground(Color.BLACK);
+	                            buttonHome.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            buttonHome.setBackground(Color.WHITE);
+	                            buttonHome.setBounds(300, 550, 400, 100);
+	                            buttonHome.addActionListener(new ActionListener() {
+	                                public void actionPerformed(ActionEvent e) {
+	                                	window.setVisible(true); //VISIBLE MAIN WINDOW
+	                                	windowContinue.setVisible(false);
+	                                   
+	                                }
+	                            });         
+	                            windowContinue.add(buttonHome);
+	                           
+							} catch (NumberFormatException  | WrongPINException | CardDoesntExistException  e1) {
+
+			                   // System.out.println("The PIN must have 4 digits and Amount must have at least one number");
+							}
+
+                        }
+                    });         
+                    windowChangePin.add(buttonContinue);      
+  
                 }
             });
             window.add(buttonChangePin);
@@ -386,7 +631,7 @@ public class GraphicInterface extends JFrame{
         			windowConsultMovements.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
                     windowConsultMovements.setVisible(true); //VISIBLE
                     windowConsultMovements.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                   
+                    windowConsultMovements.getContentPane().setLayout(null);
                 }
             });
             window.add(buttonConsultMovements);
@@ -409,7 +654,122 @@ public class GraphicInterface extends JFrame{
         			windowConsultBalance.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
                     windowConsultBalance.setVisible(true); //VISIBLE
                     windowConsultBalance.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                   
+                    windowConsultBalance.getContentPane().setLayout(null);
+                    
+                    //ID_NUMBER
+                    JLabel labelIdNumber = new JLabel("CARD NUMBER:", JLabel.LEFT);
+                    labelIdNumber.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelIdNumber.setBounds(150, 180, 400, 100);
+                    windowConsultBalance.add(labelIdNumber);
+                    
+                    JTextField textIdNumber  = new JTextField();
+                    textIdNumber .setFont(new Font("Consolas", Font.BOLD, 18));
+                    textIdNumber .setBounds(300, 200, 400, 50);
+                    windowConsultBalance.add(textIdNumber );
+                    
+                    //PIN
+                    JLabel labelPIN = new JLabel("PIN:", JLabel.LEFT);
+                    labelPIN.setFont(new Font("Consolas", Font.BOLD, 20));
+                    labelPIN.setBounds(200, 280, 400, 100);
+                    windowConsultBalance.add(labelPIN);
+                    
+                    JPasswordField textPIN = new JPasswordField();
+                    textPIN.setFont(new Font("Consolas", Font.BOLD, 18));
+                    textPIN.setBounds(300, 300, 400, 50);
+                    windowConsultBalance.add(textPIN);
+                    
+                    //WARNING
+                    JLabel labelWarning = new JLabel("The PIN must have 4 digits");
+                    labelWarning.setFont(new Font("Consolas", Font.BOLD, 16));
+                    labelWarning.setBounds(380, 700, 800, 50);
+                    windowConsultBalance.add(labelWarning);
+
+                    
+                    //CONTINUE BUTTON
+                    JButton buttonContinue = new JButton("Continue");
+                    buttonContinue.setForeground(Color.BLACK);
+                    buttonContinue.setFont(new Font("Consolas", Font.BOLD, 20));
+                    buttonContinue.setBackground(Color.WHITE);
+                    buttonContinue.setBounds(300, 550, 400, 100);
+                    buttonContinue.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                        	//ACCTION
+                            try {
+                            	//ConsultBalance
+                            	system.consultBalance(Long.parseLong(textIdNumber.getText()), textPIN.getText());
+                            	
+                                Card card = system.getCards().get(Long.parseLong(textIdNumber.getText()));
+                                long number= card.getId();
+							    
+							    //FILL IN THE NUMBER 
+							    String cardNumber = Long.toString(number);
+							    String nZeros= "";
+							    for(int i=0; i<(4-cardNumber.length());i++) {
+							       nZeros=nZeros+ "0";
+							    }
+							    cardNumber=nZeros+cardNumber;
+							   
+                                
+	                        	windowConsultBalance.setVisible(false); // NOT VISIBLE BUY CARD WINDOW
+	                        	GraphicInterface windowContinue = new GraphicInterface();
+	                        	windowContinue.setSize(1000,800); //SIZE OF WINDOW
+	                			windowContinue.setLocation(450,125); //LOCATION
+	                			windowContinue.setResizable(false); //NO MAXIMIZE
+	                			windowContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
+	                			windowContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
+	                            windowContinue.setVisible(true); //VISIBLE
+	                            windowContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	                            windowContinue.getContentPane().setLayout(null);
+                               
+	                        
+	                            
+	                            //TEXT   
+	                            //Dear
+	                            JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
+	                            labelDear.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelDear.setBounds(300, 180, 400, 100);
+	                            windowContinue.add(labelDear);
+	                            //CardNumber
+	                            JLabel labelCardNumber = new JLabel("Card Number: XXXX XXXX "+ cardNumber, JLabel.CENTER);
+	                            labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelCardNumber.setBounds(300, 220, 400, 100);
+	                            windowContinue.add(labelCardNumber);
+                                //Balance
+	                            JLabel labelBalance = new JLabel("Balance: "+ card.getBalance(), JLabel.CENTER);
+	                            labelBalance.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelBalance.setBounds(300, 260, 400, 100);
+	                            windowContinue.add(labelBalance);
+	                            //Thanks for using...
+	                            JLabel labelThanks= new JLabel("Thanks for using our system", JLabel.CENTER);
+	                            labelThanks.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            labelThanks.setBounds(300, 300, 400, 100);
+	                            windowContinue.add(labelThanks);
+	                            
+	                            
+	                            
+	                            //HOME BUTTON
+	                            JButton buttonHome = new JButton("HOME");
+	                            buttonHome.setForeground(Color.BLACK);
+	                            buttonHome.setFont(new Font("Consolas", Font.BOLD, 20));
+	                            buttonHome.setBackground(Color.WHITE);
+	                            buttonHome.setBounds(300, 550, 400, 100);
+	                            buttonHome.addActionListener(new ActionListener() {
+	                                public void actionPerformed(ActionEvent e) {
+	                                	window.setVisible(true); //VISIBLE MAIN WINDOW
+	                                	windowContinue.setVisible(false);
+	                                   
+	                                }
+	                            });         
+	                            windowContinue.add(buttonHome);
+	                           
+							} catch (NumberFormatException  | WrongPINException | CardDoesntExistException e1) {
+
+			                   // System.out.println("The PIN must have 4 digits and Amount must have at least one number");
+							}
+
+                        }
+                    });         
+                    windowConsultBalance.add(buttonContinue);      
                 }
             });
             window.add(buttonConsultBalance);
