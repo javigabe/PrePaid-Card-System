@@ -716,11 +716,11 @@ public class GraphicInterface extends JFrame{
 	                            textMovements.setBackground(Color.WHITE);
 	                            textMovements.setFont(new Font("Consolas", Font.BOLD, 20));
 	                            textMovements.setEditable(false);
-	                            JScrollPane scrollPaneParadas = new JScrollPane(textMovements);
-	                            scrollPaneParadas.setEnabled(false);
-	                            scrollPaneParadas.setBounds(300, 300, 430, 100);
+	                            JScrollPane scrollPaneMovements = new JScrollPane(textMovements);
+	                            scrollPaneMovements.setEnabled(false);
+	                            scrollPaneMovements.setBounds(300, 300, 430, 100);
 	                            textMovements.setText(movements);
-	                            windowContinue.getContentPane().add(scrollPaneParadas);
+	                            windowContinue.getContentPane().add(scrollPaneMovements);
 	                         
 	                            //Thanks for using...
 	                            JLabel labelThanks= new JLabel("Thanks for using our system", JLabel.CENTER);
