@@ -1,9 +1,13 @@
 package es.upm.pproject.prePaidCard;
 
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.HashMap;
 import es.upm.pproject.prePaidCard.model.*;
 import org.junit.jupiter.api.*;
+import java.time.Clock;
+import java.time.ZoneOffset;
 
 /**
  * Unit test for simple App.
@@ -14,14 +18,14 @@ public class AppTest {
 
 	@BeforeEach
     public void testApp() {
-		test = new PrePaidCardManager();
+		test = new PrePaidCardManager(false);
 	}
 
-/*    @Test
+    @Test
 	public void test1() {
     	Assertions.assertEquals(test.getCards(), new HashMap<>());
 	}
-*/
+
     @Test
     public void test2() throws WrongPINException {
     	Assertions.assertThrows(WrongPINException.class, () -> {test.buyCard("Alvaro", (long) 1000, "11111");});
@@ -30,8 +34,7 @@ public class AppTest {
     	Assertions.assertThrows(NotEnoughMoneyException.class, () -> {test.payCard(id, "1111", amount);});
        	long idExc = Long.valueOf(1000000);
     	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.payCard(idExc, "1111", amount);});
-    	//añadir un assertThrows con ExpiredCardException
-    }
+	}
 
     @Test
     public void test3() throws CardDoesntExistException, ExpiredCardException, NotEnoughMoneyException, WrongPINException {
@@ -51,8 +54,17 @@ public class AppTest {
        	long id = test.buyCard("Alvaro", (long) 1000, "1111");
        	Long result = Long.valueOf(1000);
     	Assertions.assertEquals(result, test.consultBalance(id, "1111"));
+<<<<<<< HEAD
     	Assertions.assertThrows(WrongPINException.class, () -> {test.consultBalance(id, "1234");});
        	long idExc = Long.valueOf(1000000);
+||||||| merged common ancestors
+    	Assertions.assertThrows(WrongPINException.class, () -> {test.consultBalance(id, "1234");});
+    	long idExc = 10000000;
+=======
+		Assertions.assertThrows(WrongPINException.class, () -> {test.buyCard("jesus", (long) 1000, "11111");});
+		Assertions.assertThrows(WrongPINException.class, () -> {test.consultBalance(id, "1234");});
+    	long idExc = 10000000;
+>>>>>>> Added bool to manager construct
     	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.consultBalance(idExc, "1111");});
     }
 
@@ -61,7 +73,15 @@ public class AppTest {
 		long id = test.buyCard("Alvaro", (long) 1000, "1111");
        	Integer amount = 400;
     	Assertions.assertThrows(WrongPINException.class, () -> {test.payCard(id, "1011", amount);});
+<<<<<<< HEAD
        	long idExc = Long.valueOf(1000000);
+||||||| merged common ancestors
+    	long idExc = 10000000;
+=======
+		Assertions.assertThrows(WrongPINException.class, () -> {test.changePin(id, "1111", "11111");});
+
+		long idExc = 10000000;
+>>>>>>> Added bool to manager construct
     	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.payCard(idExc, "1011", amount);});
     }
 

@@ -25,8 +25,8 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 	private Cipher cipherMethod = new Cipher();
 
 
-	public PrePaidCardManager() {
-		readStorageFile();
+	public PrePaidCardManager(boolean getStoredCards) {
+		if (getStoredCards) readStorageFile();
     }
 
     // method to register a new card for a user
@@ -62,7 +62,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
   			throw new CardDoesntExistException();
   		}
 
-  		Date date = new Date();
+		Date date = new Date();
 		cards.get(idNumber).pay(pin, amount, date);
 		changeStoredBalance(idNumber, -amount);
 		addStoredEvent(idNumber, date, -amount);

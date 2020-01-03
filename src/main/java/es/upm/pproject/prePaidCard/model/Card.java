@@ -13,7 +13,6 @@ public class Card {
 	private String owner;
 	private Cipher cipherMethod = new Cipher();
 
-
 	public Card(Long idNumber, Long balance, String pin, String owner, Date expirationDate) {
 		this.idNumber = idNumber;
 		this.balance = balance;

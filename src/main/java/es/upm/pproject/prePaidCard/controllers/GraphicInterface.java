@@ -14,7 +14,7 @@ public class GraphicInterface extends JFrame{
 	//MAIN
 	public static void main(String[] args) {
 
-			PrePaidCardManager system= new PrePaidCardManager();
+			PrePaidCardManager system= new PrePaidCardManager(true);
 			
 			//MAIN WINDOW
 			GraphicInterface window = new GraphicInterface();
@@ -91,7 +91,7 @@ public class GraphicInterface extends JFrame{
                         	//ACCTION
                             try {
                             	//buyCard
-							    long number = system.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), textPIN.getText());
+							    long number = system.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), textPIN.getPassword().toString());
 							    
 							    //FILL IN THE NUMBER 
 							    String cardNumber = Long.toString(number);
