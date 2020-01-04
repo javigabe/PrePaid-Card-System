@@ -182,7 +182,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		for (Object eventObj: cardEvents) {
 			JSONObject event = (JSONObject) eventObj;
 			String date = (String) event.get("date");
-			Date eventDate = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+			Date eventDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse(date);
 			Long amount = (Long) event.get("amount");
 			addEvent(card, eventDate, amount);
 		}
@@ -265,7 +265,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		if (storage == null) storage = new JSONArray();
 
 
-		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		String date = DATE_FORMAT.format(eventDate);
 
 		JSONObject event = new JSONObject();
