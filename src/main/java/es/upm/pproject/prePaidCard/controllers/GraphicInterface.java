@@ -91,7 +91,8 @@ public class GraphicInterface extends JFrame{
                         	//ACCTION
                             try {
                             	//buyCard
-							    long number = system.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), textPIN.getPassword().toString());
+
+                                long number = system.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), String.valueOf(textPIN.getPassword()));
 							    
 							    //FILL IN THE NUMBER 
 							    String cardNumber = Long.toString(number);
@@ -239,7 +240,7 @@ public class GraphicInterface extends JFrame{
                         	//ACCTION
                             try {
                             	//ChargeCard
-                            	system.chargeCard(Long.parseLong(textIdNumber.getText()), textPIN.getText(), Long.parseLong(textAmount.getText()));
+                            	system.chargeCard(Long.parseLong(textIdNumber.getText()), String.valueOf(textPIN.getPassword()), Long.parseLong(textAmount.getText()));
                             	
                                 Card card = system.getCards().get(Long.parseLong(textIdNumber.getText()));
                                 long number= card.getId();
@@ -396,7 +397,7 @@ public class GraphicInterface extends JFrame{
                         	//ACCTION
                             try {
                             	//PayCard
-                            	system.payCard(Long.parseLong(textIdNumber.getText()), textPIN.getText(), Long.parseLong(textAmount.getText()));
+                            	system.payCard(Long.parseLong(textIdNumber.getText()), String.valueOf(textPIN.getPassword()), Long.parseLong(textAmount.getText()));
                             	
                                 Card card = system.getCards().get(Long.parseLong(textIdNumber.getText()));
                                 long number= card.getId();
@@ -549,7 +550,7 @@ public class GraphicInterface extends JFrame{
                         	//ACCTION
                             try {
                             	//ChangePin
-                            	system.changePin(Long.parseLong(textIdNumber.getText()), textPIN.getText(), textNewPIN.getText());
+                            	system.changePin(Long.parseLong(textIdNumber.getText()), String.valueOf(textPIN.getPassword()), textNewPIN.getText());
                             	
                                 Card card = system.getCards().get(Long.parseLong(textIdNumber.getText()));
                                 long number= card.getId();
@@ -672,7 +673,7 @@ public class GraphicInterface extends JFrame{
                         	//ACCTION
                             try {
                             	//ConsultMovements
-                            	String movements = system.consultMovements(Long.parseLong(textIdNumber.getText()), textPIN.getText());
+                            	String movements = system.consultMovements(Long.parseLong(textIdNumber.getText()), String.valueOf(textPIN.getPassword()));
                             	
                                 Card card = system.getCards().get(Long.parseLong(textIdNumber.getText()));
                                 long number= card.getId();
@@ -817,7 +818,7 @@ public class GraphicInterface extends JFrame{
                         	//ACCTION
                             try {
                             	//ConsultBalance
-                            	system.consultBalance(Long.parseLong(textIdNumber.getText()), textPIN.getText());
+                            	system.consultBalance(Long.parseLong(textIdNumber.getText()), String.valueOf(textPIN.getPassword()));
                             	
                                 Card card = system.getCards().get(Long.parseLong(textIdNumber.getText()));
                                 long number= card.getId();
