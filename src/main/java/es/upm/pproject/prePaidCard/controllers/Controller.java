@@ -7,22 +7,16 @@ import java.util.HashMap;
 
 public class Controller {
 
-    private FrameManager view;
     private PrePaidCardInterface model;
 
-    public Controller(FrameManager view, PrePaidCardInterface model) {
-        this.view = view;
+    public Controller(PrePaidCardInterface model) {
         this.model = model;
     }
 
     public Controller() {
         model = new PrePaidCardManager(true);
-        view = new FrameManager(this);
     }
 
-    public void setView(FrameManager view) {
-        this.view = view;
-    }
 
     public long buyCard(String owner, long balance, String pin) throws WrongPINException {
         return model.buyCard(owner, balance, pin);

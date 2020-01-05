@@ -26,9 +26,11 @@ public class FrameManager extends JFrame {
 
     private FrameManager mainWindow;
     private FrameManager windowBuyCard;
-    private FrameManager windowBuyCardContinue;
     private FrameManager windowChargeCard;
     private FrameManager windowPayCard;
+    private FrameManager windowChangePin;
+    private FrameManager windowConsultMovements;
+    private FrameManager windowConsultBalance;
 
 
     public FrameManager(Controller controller) {
@@ -52,8 +54,7 @@ public class FrameManager extends JFrame {
         mainWindow.getContentPane().setLayout(new GridLayout(3,2)); //new GridLayaout(3,2) or null
         mainWindow.setVisible(true); //VISIBLE
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
+        
         // BUTTON BUY CARD
         JButton buttonBuyCard = new JButton("BUY CARD");
         buttonBuyCard.setForeground(Color.BLACK);
@@ -68,7 +69,6 @@ public class FrameManager extends JFrame {
             }
         });
         mainWindow.add(buttonBuyCard);
-
 
         // BUTTON CHARGE CARD
         JButton buttonChargeCard = new JButton("CHARGE CARD");
@@ -85,7 +85,6 @@ public class FrameManager extends JFrame {
         });
         mainWindow.add(buttonChargeCard);
 
-
         // BUTTON PAY CARD
         JButton buttonPayCard = new JButton("PAY CARD");
         buttonPayCard.setForeground(Color.BLACK);
@@ -100,7 +99,6 @@ public class FrameManager extends JFrame {
             }
         });
         mainWindow.add(buttonPayCard);
-
 
         // BUTTON CHANGE PIN
         JButton buttonChangePin = new JButton("CHANGE PIN");
@@ -117,7 +115,6 @@ public class FrameManager extends JFrame {
         });
         mainWindow.add(buttonChangePin);
 
-
         //BUTTON CONSULT MOVEMENTS
         JButton buttonConsultMovements = new JButton("CONSULT MOVEMENTS");
         buttonConsultMovements.setForeground(Color.BLACK);
@@ -132,7 +129,6 @@ public class FrameManager extends JFrame {
             }
         });
         mainWindow.add(buttonConsultMovements);
-
 
         //BUTTON CONSULT BALANCE
         JButton buttonConsultBalance = new JButton("CONSULT BALANCE");
@@ -152,7 +148,7 @@ public class FrameManager extends JFrame {
 
 
     public void buyCardView() {
-        FrameManager windowBuyCard = new FrameManager();
+        windowBuyCard = new FrameManager();
         windowBuyCard.setSize(1000,800); //SIZE OF WINDOW
         windowBuyCard.setLocation(450,125); //LOCATION
         windowBuyCard.setResizable(false); //NO MAXIMIZE
@@ -224,7 +220,8 @@ public class FrameManager extends JFrame {
             number = controller.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), String.valueOf(textPIN.getPassword()));
         }
         catch (WrongPINException e) {
-            e.printStackTrace();
+            buyCardView();
+            return;
         }
 
         //FILL IN THE NUMBER
@@ -287,9 +284,8 @@ public class FrameManager extends JFrame {
         });
     }
 
-
     public void chargeCardView() {
-        FrameManager windowChargeCard = new FrameManager();
+        windowChargeCard = new FrameManager();
         windowChargeCard.setSize(1000,800); //SIZE OF WINDOW
         windowChargeCard.setLocation(450,125); //LOCATION
         windowChargeCard.setResizable(false); //NO MAXIMIZE
@@ -358,11 +354,14 @@ public class FrameManager extends JFrame {
         try {
             controller.chargeCard(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()), Long.parseLong(chargeAmount.getText()));
         } catch (WrongPINException e) {
-
+            chargeCardView();
+            return;
         } catch (CardDoesntExistException a) {
-
+            chargeCardView();
+            return;
         } catch (ExpiredCardException b) {
-
+            chargeCardView();
+            return;
         }
 
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
@@ -434,7 +433,7 @@ public class FrameManager extends JFrame {
     }
 
     public void payCardView() {
-        FrameManager windowPayCard = new FrameManager();
+        windowPayCard = new FrameManager();
         windowPayCard.setSize(1000,800); //SIZE OF WINDOW
         windowPayCard.setLocation(450,125); //LOCATION
         windowPayCard.setResizable(false); //NO MAXIMIZE
@@ -503,13 +502,17 @@ public class FrameManager extends JFrame {
         try {
             controller.payCard(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()), Long.parseLong(payAmount.getText()));
         } catch(WrongPINException e) {
-
+            payCardView();
+            return;
         } catch (ExpiredCardException a) {
-
+            payCardView();
+            return;
         } catch (CardDoesntExistException b) {
-
+            payCardView();
+            return;
         } catch (NotEnoughMoneyException c) {
-
+            payCardView();
+            return;
         }
 
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
@@ -579,7 +582,7 @@ public class FrameManager extends JFrame {
     }
 
     public void changePinView() {
-        FrameManager windowChangePin = new FrameManager();
+        windowChangePin = new FrameManager();
         windowChangePin.setSize(1000,800); //SIZE OF WINDOW
         windowChangePin.setLocation(450,125); //LOCATION
         windowChangePin.setResizable(false); //NO MAXIMIZE
@@ -648,9 +651,11 @@ public class FrameManager extends JFrame {
         try {
             controller.changePin(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()), textNewPIN.getText());
         } catch (CardDoesntExistException e) {
-
+            changePinView();
+            return;
         } catch (WrongPINException e) {
-
+            changePinView();
+            return;
         }
 
         FrameManager windowPinContinue = new FrameManager();
@@ -688,7 +693,7 @@ public class FrameManager extends JFrame {
     }
 
     public void consultMovementsView() {
-        FrameManager windowConsultMovements = new FrameManager();
+        windowConsultMovements = new FrameManager();
         windowConsultMovements.setSize(1000,800); //SIZE OF WINDOW
         windowConsultMovements.setLocation(450,125); //LOCATION
         windowConsultMovements.setResizable(false); //NO MAXIMIZE
@@ -747,9 +752,11 @@ public class FrameManager extends JFrame {
         try {
             movements = controller.consultMovements(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()));
         } catch (CardDoesntExistException e) {
-            e.printStackTrace();
+            consultMovementsView();
+            return;
         } catch (WrongPINException e) {
-            e.printStackTrace();
+            consultMovementsView();
+            return;
         }
 
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
@@ -819,7 +826,7 @@ public class FrameManager extends JFrame {
     }
 
     public void consultBalanceView() {
-        FrameManager windowConsultBalance = new FrameManager();
+        windowConsultBalance = new FrameManager();
         windowConsultBalance.setSize(1000,800); //SIZE OF WINDOW
         windowConsultBalance.setLocation(450,125); //LOCATION
         windowConsultBalance.setResizable(false); //NO MAXIMIZE
@@ -879,9 +886,11 @@ public class FrameManager extends JFrame {
         try {
             balance = controller.consultBalance(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()));
         } catch (CardDoesntExistException e) {
-
+            consultBalanceView();
+            return;
         } catch (WrongPINException e) {
-
+            consultBalanceView();
+            return;
         }
 
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
