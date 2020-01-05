@@ -11,7 +11,6 @@ import javax.swing.*;
 
 public class FrameManager extends JFrame {
 
-
     private Controller controller;
 
     private JTextField cardNumber;
@@ -380,16 +379,9 @@ public class FrameManager extends JFrame {
         }
 
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
-        long number= card.getId();
 
         //FILL IN THE NUMBER
-        String cardNumber = Long.toString(number);
-        String nZeros= "";
-        for(int i=0; i<(4-cardNumber.length());i++) {
-            nZeros=nZeros+ "0";
-        }
-        cardNumber=nZeros+cardNumber;
-
+        String cardNumber = getCardNumber(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -539,15 +531,9 @@ public class FrameManager extends JFrame {
         }
 
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
-        long number= card.getId();
 
         //FILL IN THE NUMBER
-        String cardNumber = Long.toString(number);
-        String nZeros= "";
-        for(int i=0; i<(4-cardNumber.length());i++) {
-            nZeros=nZeros+ "0";
-        }
-        cardNumber = nZeros + cardNumber;
+        String cardNumber = getCardNumber(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -790,15 +776,9 @@ public class FrameManager extends JFrame {
         }
 
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
-        long number= card.getId();
 
         //FILL IN THE NUMBER
-        String cardNumber = Long.toString(number);
-        String nZeros= "";
-        for(int i=0; i<(4-cardNumber.length());i++) {
-            nZeros=nZeros+ "0";
-        }
-        cardNumber=nZeros+cardNumber;
+        String cardNumber = getCardNumber(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -928,15 +908,9 @@ public class FrameManager extends JFrame {
         }
 
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
-        long number= card.getId();
 
         //FILL IN THE NUMBER
-        String cardNumber = Long.toString(number);
-        String nZeros= "";
-        for(int i=0; i<(4-cardNumber.length());i++) {
-            nZeros=nZeros+ "0";
-        }
-        cardNumber = nZeros + cardNumber;
+        String cardNumber = getCardNumber(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -976,6 +950,18 @@ public class FrameManager extends JFrame {
                 mainWindow.setVisible(true);
             }
         });
+    }
+
+    private String getCardNumber(Card card) {
+        long number = card.getId();
+
+        //FILL IN THE NUMBER
+        String cardNumber = Long.toString(number);
+        String nZeros= "";
+        for(int i=0; i<(4-cardNumber.length());i++) {
+            nZeros=nZeros+ "0";
+        }
+        return cardNumber=nZeros+cardNumber;
     }
 }
 
