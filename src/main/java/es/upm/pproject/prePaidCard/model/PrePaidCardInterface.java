@@ -1,6 +1,6 @@
 package es.upm.pproject.prePaidCard.model;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public interface PrePaidCardInterface {
 	
@@ -16,5 +16,5 @@ public interface PrePaidCardInterface {
 
     public Long consultBalance(Long idNumber, String pin) throws CardDoesntExistException, WrongPINException;
 
-    public HashMap<Long, Card> getCards();
+    public Map<Long, Card> getCards();
 }

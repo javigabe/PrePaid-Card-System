@@ -1,9 +1,8 @@
 package es.upm.pproject.prePaidCard.controllers;
 
 import es.upm.pproject.prePaidCard.model.*;
-import es.upm.pproject.prePaidCard.views.FrameManager;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class Controller {
 
@@ -42,7 +41,7 @@ public class Controller {
         return model.consultMovements(number, pin);
     }
 
-    public HashMap<Long, Card> getCards() {
+    public Map<Long, Card> getCards() {
         return model.getCards();
     }
 

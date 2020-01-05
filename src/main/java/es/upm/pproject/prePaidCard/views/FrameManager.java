@@ -54,7 +54,7 @@ public class FrameManager extends JFrame {
         mainWindow.getContentPane().setLayout(new GridLayout(3,2)); //new GridLayaout(3,2) or null
         mainWindow.setVisible(true); //VISIBLE
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         // BUTTON BUY CARD
         JButton buttonBuyCard = new JButton("BUY CARD");
         buttonBuyCard.setForeground(Color.BLACK);

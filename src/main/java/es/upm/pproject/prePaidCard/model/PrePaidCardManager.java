@@ -8,11 +8,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.File;
+import java.util.Map;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -100,7 +102,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
   		return cards.get(idNumber).consultBalance(pin);
   	}
   	
-  	public HashMap<Long, Card> getCards() {
+  	public Map<Long, Card> getCards() {
   		return cards;
   	}
 
@@ -128,11 +130,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 			if (!reader.ready()) return null;
 			return (JSONArray) jsonParser.parse(reader);
 
-		} catch (ParseException e) {
-			LOGGER.log(Level.SEVERE, "Error");
-		} catch (FileNotFoundException e) {
-			LOGGER.log(Level.SEVERE, "Error");
-		} catch (IOException e) {
+		} catch (ParseException | IOException e) {
 			LOGGER.log(Level.SEVERE, "Error");
 		}
 		return null;
