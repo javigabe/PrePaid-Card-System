@@ -235,12 +235,12 @@ public class FrameManager extends JFrame {
         }
 
         //FILL IN THE NUMBER
-        String cardNumber = Long.toString(number);
-        String nZeros= "";
-        for(int i=0; i<(12-cardNumber.length());i++) {
-            nZeros=nZeros+ "0";
+        String cardNumberFormated = Long.toString(number);
+        StringBuilder nZeros = new StringBuilder();
+        for(int i=0; i<(12-cardNumberFormated.length());i++) {
+            nZeros.append("0");
         }
-        cardNumber=nZeros+cardNumber;
+        cardNumberFormated = nZeros.append(cardNumberFormated).toString();
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ textOwner.getText(), JLabel.CENTER);
@@ -249,7 +249,7 @@ public class FrameManager extends JFrame {
         windowBuyCardContinue.add(labelDear);
 
         //CardNumber
-        JLabel labelCardNumber = new JLabel("Card Number: " + cardNumber, JLabel.CENTER);
+        JLabel labelCardNumber = new JLabel("Card Number: " + cardNumberFormated, JLabel.CENTER);
         labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
         labelCardNumber.setBounds(300, 220, 400, 100);
         windowBuyCardContinue.add(labelCardNumber);
@@ -381,7 +381,7 @@ public class FrameManager extends JFrame {
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
 
         //FILL IN THE NUMBER
-        String cardNumber = getCardNumber(card);
+        String cardNumberFormated = getCardNumber(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -396,7 +396,7 @@ public class FrameManager extends JFrame {
         windowChargeContinue.add(labelAmount);
 
         //CardNumber
-        JLabel labelCardNumber = new JLabel("Card Number: XXXX XXXX " + cardNumber, JLabel.CENTER);
+        JLabel labelCardNumber = new JLabel("Card Number: XXXX XXXX " + cardNumberFormated, JLabel.CENTER);
         labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
         labelCardNumber.setBounds(300, 260, 400, 100);
         windowChargeContinue.add(labelCardNumber);
@@ -533,7 +533,7 @@ public class FrameManager extends JFrame {
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
 
         //FILL IN THE NUMBER
-        String cardNumber = getCardNumber(card);
+        String cardNumberFormated = getCardNumber(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -548,7 +548,7 @@ public class FrameManager extends JFrame {
         windowPayContinue.add(labelAmount);
 
         //CardNumber
-        JLabel labelCardNumber = new JLabel("Card Number: XXXX XXXX "+ cardNumber, JLabel.CENTER);
+        JLabel labelCardNumber = new JLabel("Card Number: XXXX XXXX " + cardNumberFormated, JLabel.CENTER);
         labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
         labelCardNumber.setBounds(300, 260, 400, 100);
         windowPayContinue.add(labelCardNumber);
@@ -658,7 +658,7 @@ public class FrameManager extends JFrame {
         windowPinContinue.getContentPane().setLayout(null);
 
         try {
-            controller.changePin(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()), textNewPIN.getText());
+            controller.changePin(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()), String.valueOf(textNewPIN.getPassword()));
         } catch (CardDoesntExistException e) {
             JOptionPane.showMessageDialog(windowPinContinue, "CARD DOESN'T EXIST");
             windowPinContinue.setVisible(false);
@@ -778,7 +778,7 @@ public class FrameManager extends JFrame {
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
 
         //FILL IN THE NUMBER
-        String cardNumber = getCardNumber(card);
+        String cardNumberFormated = getCardNumber(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -787,7 +787,7 @@ public class FrameManager extends JFrame {
         windowMovementsContinue.add(labelDear);
 
         //CardNumber
-        JLabel labelCardNumber = new JLabel("Card Number: XXXX XXXX "+ cardNumber, JLabel.CENTER);
+        JLabel labelCardNumber = new JLabel("Card Number: XXXX XXXX "+ cardNumberFormated, JLabel.CENTER);
         labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
         labelCardNumber.setBounds(300, 220, 400, 100);
         windowMovementsContinue.add(labelCardNumber);
@@ -910,7 +910,7 @@ public class FrameManager extends JFrame {
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
 
         //FILL IN THE NUMBER
-        String cardNumber = getCardNumber(card);
+        String cardNumberFormated = getCardNumber(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -919,7 +919,7 @@ public class FrameManager extends JFrame {
         windowBalanceContinue.add(labelDear);
 
         //CardNumber
-        JLabel labelCardNumber = new JLabel("Card Number: XXXX XXXX " + cardNumber, JLabel.CENTER);
+        JLabel labelCardNumber = new JLabel("Card Number: XXXX XXXX " + cardNumberFormated, JLabel.CENTER);
         labelCardNumber.setFont(new Font("Consolas", Font.BOLD, 20));
         labelCardNumber.setBounds(300, 220, 400, 100);
         windowBalanceContinue.add(labelCardNumber);
@@ -955,13 +955,14 @@ public class FrameManager extends JFrame {
     private String getCardNumber(Card card) {
         long number = card.getId();
 
+        StringBuilder cardNum = new StringBuilder();
         //FILL IN THE NUMBER
-        String cardNumber = Long.toString(number);
-        String nZeros= "";
-        for(int i=0; i<(4-cardNumber.length());i++) {
-            nZeros=nZeros+ "0";
+        String cardNumberFormated = Long.toString(number);
+
+        for(int i=0; i<(4-cardNumberFormated.length());i++) {
+            cardNum.append("0");
         }
-        return cardNumber=nZeros+cardNumber;
+        return cardNum.append(cardNumberFormated).toString();
     }
 }
 
