@@ -1,0 +1,58 @@
+package es.upm.pproject.prePaidCard.controllers;
+
+import es.upm.pproject.prePaidCard.model.*;
+import es.upm.pproject.prePaidCard.views.FrameManager;
+
+import java.util.HashMap;
+
+public class Controller {
+
+    private FrameManager view;
+    private PrePaidCardInterface model;
+
+    public Controller(FrameManager view, PrePaidCardInterface model) {
+        this.view = view;
+        this.model = model;
+    }
+
+    public Controller() {
+        model = new PrePaidCardManager(true);
+        view = new FrameManager(this);
+    }
+
+    public void setView(FrameManager view) {
+        this.view = view;
+    }
+
+    public long buyCard(String owner, long balance, String pin) throws WrongPINException {
+        return model.buyCard(owner, balance, pin);
+    }
+
+    public void chargeCard(long number, String pin, long amount) throws ExpiredCardException, CardDoesntExistException, WrongPINException {
+        model.chargeCard(number, pin, amount);
+    }
+
+    public void payCard(long number, String pin, long amount) throws CardDoesntExistException, ExpiredCardException, WrongPINException, NotEnoughMoneyException {
+        model.payCard(number, pin, amount);
+    }
+
+    public void changePin(long card, String oldPin, String newPin) throws CardDoesntExistException, WrongPINException {
+        model.changePin(card, oldPin, newPin);
+    }
+
+    public long consultBalance(long number, String pin) throws CardDoesntExistException, WrongPINException {
+        return model.consultBalance(number, pin);
+    }
+
+    public String consultMovements(long number, String pin) throws CardDoesntExistException, WrongPINException {
+        return model.consultMovements(number, pin);
+    }
+
+    public HashMap<Long, Card> getCards() {
+        return model.getCards();
+    }
+
+
+
+
+}
