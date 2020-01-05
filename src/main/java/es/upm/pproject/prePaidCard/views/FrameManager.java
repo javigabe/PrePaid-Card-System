@@ -6,8 +6,6 @@ import es.upm.pproject.prePaidCard.model.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 import javax.swing.*;
 
 
@@ -215,11 +213,24 @@ public class FrameManager extends JFrame {
     }
     
     public void buyCardContinue() {
+        // WINDOW SETTINGS
+        FrameManager windowBuyCardContinue = new FrameManager();
+        windowBuyCardContinue.setSize(1000,800); //SIZE OF WINDOW
+        windowBuyCardContinue.setLocation(450,125); //LOCATION
+        windowBuyCardContinue.setResizable(false); //NO MAXIMIZE
+        windowBuyCardContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
+        windowBuyCardContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
+        windowBuyCardContinue.setVisible(true); //VISIBLE
+        windowBuyCardContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        windowBuyCardContinue.getContentPane().setLayout(null);
+
         long number = 0;
         try {
             number = controller.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), String.valueOf(textPIN.getPassword()));
         }
         catch (WrongPINException e) {
+            JOptionPane.showMessageDialog(windowBuyCardContinue, "WRONG PIN");
+            windowBuyCardContinue.setVisible(false);
             buyCardView();
             return;
         }
@@ -231,18 +242,6 @@ public class FrameManager extends JFrame {
             nZeros=nZeros+ "0";
         }
         cardNumber=nZeros+cardNumber;
-
-
-        // WINDOW SETTINGS
-        FrameManager windowBuyCardContinue = new FrameManager();
-        windowBuyCardContinue.setSize(1000,800); //SIZE OF WINDOW
-        windowBuyCardContinue.setLocation(450,125); //LOCATION
-        windowBuyCardContinue.setResizable(false); //NO MAXIMIZE
-        windowBuyCardContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
-        windowBuyCardContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
-        windowBuyCardContinue.setVisible(true); //VISIBLE
-        windowBuyCardContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        windowBuyCardContinue.getContentPane().setLayout(null);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ textOwner.getText(), JLabel.CENTER);
@@ -351,15 +350,31 @@ public class FrameManager extends JFrame {
     }
 
     public void chargeContinue() {
+        FrameManager windowChargeContinue = new FrameManager();
+        windowChargeContinue.setSize(1000,800); //SIZE OF WINDOW
+        windowChargeContinue.setLocation(450,125); //LOCATION
+        windowChargeContinue.setResizable(false); //NO MAXIMIZE
+        windowChargeContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
+        windowChargeContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
+        windowChargeContinue.setVisible(true); //VISIBLE
+        windowChargeContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        windowChargeContinue.getContentPane().setLayout(null);
+
         try {
             controller.chargeCard(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()), Long.parseLong(chargeAmount.getText()));
         } catch (WrongPINException e) {
+            JOptionPane.showMessageDialog(windowChargeContinue, "WRONG PIN");
+            windowChargeContinue.setVisible(false);
             chargeCardView();
             return;
         } catch (CardDoesntExistException a) {
+            JOptionPane.showMessageDialog(windowChargeContinue, "CARD DOESNT EXIST");
+            windowChargeContinue.setVisible(false);
             chargeCardView();
             return;
         } catch (ExpiredCardException b) {
+            JOptionPane.showMessageDialog(windowChargeContinue, "EXPIRED CARD");
+            windowChargeContinue.setVisible(false);
             chargeCardView();
             return;
         }
@@ -375,16 +390,6 @@ public class FrameManager extends JFrame {
         }
         cardNumber=nZeros+cardNumber;
 
-
-        FrameManager windowChargeContinue = new FrameManager();
-        windowChargeContinue.setSize(1000,800); //SIZE OF WINDOW
-        windowChargeContinue.setLocation(450,125); //LOCATION
-        windowChargeContinue.setResizable(false); //NO MAXIMIZE
-        windowChargeContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
-        windowChargeContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
-        windowChargeContinue.setVisible(true); //VISIBLE
-        windowChargeContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        windowChargeContinue.getContentPane().setLayout(null);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -499,18 +504,36 @@ public class FrameManager extends JFrame {
     }
 
     public void payCardContinue() {
+        FrameManager windowPayContinue = new FrameManager();
+        windowPayContinue.setSize(1000,800); //SIZE OF WINDOW
+        windowPayContinue.setLocation(450,125); //LOCATION
+        windowPayContinue.setResizable(false); //NO MAXIMIZE
+        windowPayContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
+        windowPayContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
+        windowPayContinue.setVisible(true); //VISIBLE
+        windowPayContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        windowPayContinue.getContentPane().setLayout(null);
+
         try {
             controller.payCard(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()), Long.parseLong(payAmount.getText()));
         } catch(WrongPINException e) {
+            JOptionPane.showMessageDialog(windowPayContinue, "WRONG PIN");
+            windowPayContinue.setVisible(false);
             payCardView();
             return;
         } catch (ExpiredCardException a) {
+            JOptionPane.showMessageDialog(windowPayContinue, "EXPIRED CARD");
+            windowPayContinue.setVisible(false);
             payCardView();
             return;
         } catch (CardDoesntExistException b) {
+            JOptionPane.showMessageDialog(windowPayContinue, "CARD DOESNT EXIST");
+            windowPayContinue.setVisible(false);
             payCardView();
             return;
         } catch (NotEnoughMoneyException c) {
+            JOptionPane.showMessageDialog(windowPayContinue, "YOU DON'T HAVE ENOUGH MONEY");
+            windowPayContinue.setVisible(false);
             payCardView();
             return;
         }
@@ -525,16 +548,6 @@ public class FrameManager extends JFrame {
             nZeros=nZeros+ "0";
         }
         cardNumber = nZeros + cardNumber;
-
-        FrameManager windowPayContinue = new FrameManager();
-        windowPayContinue.setSize(1000,800); //SIZE OF WINDOW
-        windowPayContinue.setLocation(450,125); //LOCATION
-        windowPayContinue.setResizable(false); //NO MAXIMIZE
-        windowPayContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
-        windowPayContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
-        windowPayContinue.setVisible(true); //VISIBLE
-        windowPayContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        windowPayContinue.getContentPane().setLayout(null);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -648,16 +661,6 @@ public class FrameManager extends JFrame {
     }
 
     public void changePinContinue() {
-        try {
-            controller.changePin(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()), textNewPIN.getText());
-        } catch (CardDoesntExistException e) {
-            changePinView();
-            return;
-        } catch (WrongPINException e) {
-            changePinView();
-            return;
-        }
-
         FrameManager windowPinContinue = new FrameManager();
         windowPinContinue.setSize(1000,800); //SIZE OF WINDOW
         windowPinContinue.setLocation(450,125); //LOCATION
@@ -668,6 +671,19 @@ public class FrameManager extends JFrame {
         windowPinContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         windowPinContinue.getContentPane().setLayout(null);
 
+        try {
+            controller.changePin(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()), textNewPIN.getText());
+        } catch (CardDoesntExistException e) {
+            JOptionPane.showMessageDialog(windowPinContinue, "CARD DOESN'T EXIST");
+            windowPinContinue.setVisible(false);
+            changePinView();
+            return;
+        } catch (WrongPINException e) {
+            JOptionPane.showMessageDialog(windowPinContinue, "WRONG PIN");
+            windowPinContinue.setVisible(false);
+            changePinView();
+            return;
+        }
 
         //Thanks for using...
         JLabel labelThanks= new JLabel("Thanks for using our system", JLabel.CENTER);
@@ -748,13 +764,27 @@ public class FrameManager extends JFrame {
     }
 
     public void consultMovemetsContinue() {
+        FrameManager windowMovementsContinue = new FrameManager();
+        windowMovementsContinue.setSize(1000,800); //SIZE OF WINDOW
+        windowMovementsContinue.setLocation(450,125); //LOCATION
+        windowMovementsContinue.setResizable(false); //NO MAXIMIZE
+        windowMovementsContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
+        windowMovementsContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
+        windowMovementsContinue.setVisible(true); //VISIBLE
+        windowMovementsContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        windowMovementsContinue.getContentPane().setLayout(null);
+
         String movements = null;
         try {
             movements = controller.consultMovements(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()));
         } catch (CardDoesntExistException e) {
+            JOptionPane.showMessageDialog(windowMovementsContinue, "CARD DOESN'T EXIST");
+            windowMovementsContinue.setVisible(false);
             consultMovementsView();
             return;
         } catch (WrongPINException e) {
+            JOptionPane.showMessageDialog(windowMovementsContinue, "WRONG PIN");
+            windowMovementsContinue.setVisible(false);
             consultMovementsView();
             return;
         }
@@ -769,16 +799,6 @@ public class FrameManager extends JFrame {
             nZeros=nZeros+ "0";
         }
         cardNumber=nZeros+cardNumber;
-
-        FrameManager windowMovementsContinue = new FrameManager();
-        windowMovementsContinue.setSize(1000,800); //SIZE OF WINDOW
-        windowMovementsContinue.setLocation(450,125); //LOCATION
-        windowMovementsContinue.setResizable(false); //NO MAXIMIZE
-        windowMovementsContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
-        windowMovementsContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
-        windowMovementsContinue.setVisible(true); //VISIBLE
-        windowMovementsContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        windowMovementsContinue.getContentPane().setLayout(null);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -882,14 +902,28 @@ public class FrameManager extends JFrame {
     }
 
     public void consultBalanceContinue() {
+        FrameManager windowBalanceContinue = new FrameManager();
+        windowBalanceContinue.setSize(1000,800); //SIZE OF WINDOW
+        windowBalanceContinue.setLocation(450,125); //LOCATION
+        windowBalanceContinue.setResizable(false); //NO MAXIMIZE
+        windowBalanceContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
+        windowBalanceContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
+        windowBalanceContinue.setVisible(true); //VISIBLE
+        windowBalanceContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        windowBalanceContinue.getContentPane().setLayout(null);
+
         long balance = 0;
         try {
             balance = controller.consultBalance(Long.parseLong(cardNumber.getText()), String.valueOf(textPIN.getPassword()));
         } catch (CardDoesntExistException e) {
-            consultBalanceView();
+            JOptionPane.showMessageDialog(windowBalanceContinue, "CARD DOESN'T EXIST");
+            windowBalanceContinue.setVisible(false);
+            consultMovementsView();
             return;
         } catch (WrongPINException e) {
-            consultBalanceView();
+            JOptionPane.showMessageDialog(windowBalanceContinue, "WRONG PIN");
+            windowBalanceContinue.setVisible(false);
+            consultMovementsView();
             return;
         }
 
@@ -903,17 +937,6 @@ public class FrameManager extends JFrame {
             nZeros=nZeros+ "0";
         }
         cardNumber = nZeros + cardNumber;
-
-
-        FrameManager windowBalanceContinue = new FrameManager();
-        windowBalanceContinue.setSize(1000,800); //SIZE OF WINDOW
-        windowBalanceContinue.setLocation(450,125); //LOCATION
-        windowBalanceContinue.setResizable(false); //NO MAXIMIZE
-        windowBalanceContinue.setTitle("Pre-PaidCardSystem"); //NAME OF WINDOW
-        windowBalanceContinue.setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png")); //ICON OF WINDOW
-        windowBalanceContinue.setVisible(true); //VISIBLE
-        windowBalanceContinue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        windowBalanceContinue.getContentPane().setLayout(null);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);

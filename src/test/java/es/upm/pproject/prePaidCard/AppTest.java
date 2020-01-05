@@ -1,13 +1,9 @@
 package es.upm.pproject.prePaidCard;
 
 
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.HashMap;
 import es.upm.pproject.prePaidCard.model.*;
 import org.junit.jupiter.api.*;
-import java.time.Clock;
-import java.time.ZoneOffset;
 
 /**
  * Unit test for simple App.
