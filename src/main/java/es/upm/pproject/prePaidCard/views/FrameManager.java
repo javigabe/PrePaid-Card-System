@@ -142,7 +142,7 @@ public class FrameManager extends JFrame {
     }
 
 
-    public void buyCardView() {
+    private void buyCardView() {
         windowBuyCard = new FrameManager();
         windowBuyCard.setSize(1000,800); //SIZE OF WINDOW
         windowBuyCard.setLocation(450,125); //LOCATION
@@ -220,7 +220,7 @@ public class FrameManager extends JFrame {
         });
     }
     
-    public void buyCardContinue() {
+    private void buyCardContinue() {
         // WINDOW SETTINGS
         FrameManager windowBuyCardContinue = new FrameManager();
         windowBuyCardContinue.setSize(1000,800); //SIZE OF WINDOW
@@ -295,7 +295,7 @@ public class FrameManager extends JFrame {
         });
     }
 
-    public void chargeCardView() {
+    private void chargeCardView() {
         windowChargeCard = new FrameManager();
         windowChargeCard.setSize(1000,800); //SIZE OF WINDOW
         windowChargeCard.setLocation(450,125); //LOCATION
@@ -373,7 +373,7 @@ public class FrameManager extends JFrame {
         });
     }
 
-    public void chargeContinue() {
+    private void chargeContinue() {
         FrameManager windowChargeContinue = new FrameManager();
         windowChargeContinue.setSize(1000,800); //SIZE OF WINDOW
         windowChargeContinue.setLocation(450,125); //LOCATION
@@ -459,7 +459,7 @@ public class FrameManager extends JFrame {
         });
     }
 
-    public void payCardView() {
+    private void payCardView() {
         windowPayCard = new FrameManager();
         windowPayCard.setSize(1000,800); //SIZE OF WINDOW
         windowPayCard.setLocation(450,125); //LOCATION
@@ -537,7 +537,7 @@ public class FrameManager extends JFrame {
         });
     }
 
-    public void payCardContinue() {
+    private void payCardContinue() {
         FrameManager windowPayContinue = new FrameManager();
         windowPayContinue.setSize(1000,800); //SIZE OF WINDOW
         windowPayContinue.setLocation(450,125); //LOCATION
@@ -627,7 +627,7 @@ public class FrameManager extends JFrame {
         });
     }
 
-    public void changePinView() {
+    private void changePinView() {
         windowChangePin = new FrameManager();
         windowChangePin.setSize(1000,800); //SIZE OF WINDOW
         windowChangePin.setLocation(450,125); //LOCATION
@@ -705,7 +705,7 @@ public class FrameManager extends JFrame {
         });
     }
 
-    public void changePinContinue() {
+    private void changePinContinue() {
         FrameManager windowPinContinue = new FrameManager();
         windowPinContinue.setSize(1000,800); //SIZE OF WINDOW
         windowPinContinue.setLocation(450,125); //LOCATION
@@ -758,7 +758,7 @@ public class FrameManager extends JFrame {
 
     }
 
-    public void consultMovementsView() {
+    private void consultMovementsView() {
         windowConsultMovements = new FrameManager();
         windowConsultMovements.setSize(1000,800); //SIZE OF WINDOW
         windowConsultMovements.setLocation(450,125); //LOCATION
@@ -825,7 +825,7 @@ public class FrameManager extends JFrame {
         });
     }
 
-    public void consultMovemetsContinue() {
+    private void consultMovemetsContinue() {
         FrameManager windowMovementsContinue = new FrameManager();
         windowMovementsContinue.setSize(1000,800); //SIZE OF WINDOW
         windowMovementsContinue.setLocation(450,125); //LOCATION
@@ -906,7 +906,7 @@ public class FrameManager extends JFrame {
         });
     }
 
-    public void consultBalanceView() {
+    private void consultBalanceView() {
         windowConsultBalance = new FrameManager();
         windowConsultBalance.setSize(1000,800); //SIZE OF WINDOW
         windowConsultBalance.setLocation(450,125); //LOCATION
@@ -974,7 +974,7 @@ public class FrameManager extends JFrame {
         });
     }
 
-    public void consultBalanceContinue() {
+    private void consultBalanceContinue() {
         FrameManager windowBalanceContinue = new FrameManager();
         windowBalanceContinue.setSize(1000,800); //SIZE OF WINDOW
         windowBalanceContinue.setLocation(450,125); //LOCATION
