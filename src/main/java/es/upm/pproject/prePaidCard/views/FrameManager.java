@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 
 public class FrameManager extends JFrame {
@@ -133,12 +134,9 @@ public class FrameManager extends JFrame {
         buttonConsultBalance.setFont(new Font("Consolas", Font.BOLD, 28));
         buttonConsultBalance.setBackground(Color.WHITE);
         buttonConsultBalance.setBounds(300, 630, 400, 100);
-        buttonConsultBalance.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.setVisible(false);
-                consultBalanceView();
-            }
+        buttonConsultBalance.addActionListener(event -> {
+            mainWindow.setVisible(false);
+            consultBalanceView();
         });
         mainWindow.add(buttonConsultBalance);
     }
@@ -155,6 +153,17 @@ public class FrameManager extends JFrame {
         windowBuyCard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         windowBuyCard.getContentPane().setLayout(null);
 
+        // BACK BUTTON
+        JButton back = new JButton("Back");
+        back.setForeground(Color.BLACK);
+        back.setFont(new Font("Consolas", Font.BOLD, 20));
+        back.setBackground(Color.WHITE);
+        back.setBounds(10, 10, 90, 40);
+        windowBuyCard.add(back);
+        back.addActionListener(event -> {
+            windowBuyCard.setVisible(false);
+            mainWindow.setVisible(true);
+        });
 
         //OWNER
         JLabel labelOwner = new JLabel("OWNER:", JLabel.LEFT);
@@ -226,9 +235,13 @@ public class FrameManager extends JFrame {
         long number = 0;
         try {
             number = controller.buyCard(textOwner.getText(), Long.parseLong(textBalance.getText()), String.valueOf(textPIN.getPassword()));
-        }
-        catch (WrongPINException e) {
+        } catch (WrongPINException e) {
             JOptionPane.showMessageDialog(windowBuyCardContinue, "WRONG PIN");
+            windowBuyCardContinue.setVisible(false);
+            buyCardView();
+            return;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(windowBuyCardContinue, "AN ERROR OCURRED");
             windowBuyCardContinue.setVisible(false);
             buyCardView();
             return;
@@ -292,6 +305,18 @@ public class FrameManager extends JFrame {
         windowChargeCard.setVisible(true); //VISIBLE
         windowChargeCard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         windowChargeCard.getContentPane().setLayout(null);
+
+        // BACK BUTTON
+        JButton back = new JButton("Back");
+        back.setForeground(Color.BLACK);
+        back.setFont(new Font("Consolas", Font.BOLD, 20));
+        back.setBackground(Color.WHITE);
+        back.setBounds(10, 10, 90, 40);
+        windowChargeCard.add(back);
+        back.addActionListener(event -> {
+            windowChargeCard.setVisible(false);
+            mainWindow.setVisible(true);
+        });
 
         //ID_NUMBER
         JLabel labelIdNumber = new JLabel("CARD NUMBER:", JLabel.LEFT);
@@ -366,13 +391,18 @@ public class FrameManager extends JFrame {
             windowChargeContinue.setVisible(false);
             chargeCardView();
             return;
-        } catch (CardDoesntExistException a) {
+        } catch (CardDoesntExistException e) {
             JOptionPane.showMessageDialog(windowChargeContinue, "CARD DOESNT EXIST");
             windowChargeContinue.setVisible(false);
             chargeCardView();
             return;
-        } catch (ExpiredCardException b) {
+        } catch (ExpiredCardException e) {
             JOptionPane.showMessageDialog(windowChargeContinue, "EXPIRED CARD");
+            windowChargeContinue.setVisible(false);
+            chargeCardView();
+            return;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(windowChargeContinue, "AN ERROR OCURRED");
             windowChargeContinue.setVisible(false);
             chargeCardView();
             return;
@@ -439,6 +469,18 @@ public class FrameManager extends JFrame {
         windowPayCard.setVisible(true); //VISIBLE
         windowPayCard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         windowPayCard.getContentPane().setLayout(null);
+
+        // BACK BUTTON
+        JButton back = new JButton("Back");
+        back.setForeground(Color.BLACK);
+        back.setFont(new Font("Consolas", Font.BOLD, 20));
+        back.setBackground(Color.WHITE);
+        back.setBounds(10, 10, 90, 40);
+        windowPayCard.add(back);
+        back.addActionListener(event -> {
+            windowPayCard.setVisible(false);
+            mainWindow.setVisible(true);
+        });
 
         //ID_NUMBER
         JLabel labelIdNumber = new JLabel("CARD NUMBER:", JLabel.LEFT);
@@ -528,6 +570,11 @@ public class FrameManager extends JFrame {
             windowPayContinue.setVisible(false);
             payCardView();
             return;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(windowPayContinue, "AN ERROR OCURRED");
+            windowPayContinue.setVisible(false);
+            payCardView();
+            return;
         }
 
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
@@ -590,6 +637,18 @@ public class FrameManager extends JFrame {
         windowChangePin.setVisible(true); //VISIBLE
         windowChangePin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         windowChangePin.getContentPane().setLayout(null);
+
+        // BACK BUTTON
+        JButton back = new JButton("Back");
+        back.setForeground(Color.BLACK);
+        back.setFont(new Font("Consolas", Font.BOLD, 20));
+        back.setBackground(Color.WHITE);
+        back.setBounds(10, 10, 90, 40);
+        windowChangePin.add(back);
+        back.addActionListener(event -> {
+            windowChangePin.setVisible(false);
+            mainWindow.setVisible(true);
+        });
 
         //ID_NUMBER
         JLabel labelIdNumber = new JLabel("CARD NUMBER:", JLabel.LEFT);
@@ -669,6 +728,11 @@ public class FrameManager extends JFrame {
             windowPinContinue.setVisible(false);
             changePinView();
             return;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(windowPinContinue, "AN ERROR OCURRED");
+            windowPinContinue.setVisible(false);
+            changePinView();
+            return;
         }
 
         //Thanks for using...
@@ -704,6 +768,18 @@ public class FrameManager extends JFrame {
         windowConsultMovements.setVisible(true); //VISIBLE
         windowConsultMovements.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         windowConsultMovements.getContentPane().setLayout(null);
+
+        // BACK BUTTON
+        JButton back = new JButton("Back");
+        back.setForeground(Color.BLACK);
+        back.setFont(new Font("Consolas", Font.BOLD, 20));
+        back.setBackground(Color.WHITE);
+        back.setBounds(10, 10, 90, 40);
+        windowConsultMovements.add(back);
+        back.addActionListener(event -> {
+            windowConsultMovements.setVisible(false);
+            mainWindow.setVisible(true);
+        });
 
         //ID_NUMBER
         JLabel labelIdNumber = new JLabel("CARD NUMBER:", JLabel.LEFT);
@@ -773,6 +849,11 @@ public class FrameManager extends JFrame {
             windowMovementsContinue.setVisible(false);
             consultMovementsView();
             return;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(windowMovementsContinue, "AN ERROR OCURRED");
+            windowMovementsContinue.setVisible(false);
+            consultMovementsView();
+            return;
         }
 
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
@@ -836,6 +917,18 @@ public class FrameManager extends JFrame {
         windowConsultBalance.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         windowConsultBalance.getContentPane().setLayout(null);
 
+        // BACK BUTTON
+        JButton back = new JButton("Back");
+        back.setForeground(Color.BLACK);
+        back.setFont(new Font("Consolas", Font.BOLD, 20));
+        back.setBackground(Color.WHITE);
+        back.setBounds(10, 10, 90, 40);
+        windowConsultBalance.add(back);
+        back.addActionListener(event -> {
+            windowConsultBalance.setVisible(false);
+            mainWindow.setVisible(true);
+        });
+
         //ID_NUMBER
         JLabel labelIdNumber = new JLabel("CARD NUMBER:", JLabel.LEFT);
         labelIdNumber.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -898,12 +991,17 @@ public class FrameManager extends JFrame {
         } catch (CardDoesntExistException e) {
             JOptionPane.showMessageDialog(windowBalanceContinue, "CARD DOESN'T EXIST");
             windowBalanceContinue.setVisible(false);
-            consultMovementsView();
+            consultBalanceView();
             return;
         } catch (WrongPINException e) {
             JOptionPane.showMessageDialog(windowBalanceContinue, "WRONG PIN");
             windowBalanceContinue.setVisible(false);
-            consultMovementsView();
+            consultBalanceView();
+            return;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(windowBalanceContinue, "AN ERROR OCURRED");
+            windowBalanceContinue.setVisible(false);
+            consultBalanceView();
             return;
         }
 
