@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
-
 
 public class FrameManager extends JFrame {
 
@@ -39,7 +37,6 @@ public class FrameManager extends JFrame {
     public FrameManager() {
         // EMPTY CONSTRUCTOR
     }
-
 
     private void createMainWindow() {
         mainWindow = new FrameManager();
@@ -140,7 +137,6 @@ public class FrameManager extends JFrame {
         });
         mainWindow.add(buttonConsultBalance);
     }
-
 
     private void buyCardView() {
         windowBuyCard = new FrameManager();
@@ -411,7 +407,7 @@ public class FrameManager extends JFrame {
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
 
         //FILL IN THE NUMBER
-        String cardNumberFormated = getCardNumber(card);
+        String cardNumberFormated = getCardNumberFormated(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -580,7 +576,7 @@ public class FrameManager extends JFrame {
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
 
         //FILL IN THE NUMBER
-        String cardNumberFormated = getCardNumber(card);
+        String cardNumberFormated = getCardNumberFormated(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -859,7 +855,7 @@ public class FrameManager extends JFrame {
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
 
         //FILL IN THE NUMBER
-        String cardNumberFormated = getCardNumber(card);
+        String cardNumberFormated = getCardNumberFormated(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -1008,7 +1004,7 @@ public class FrameManager extends JFrame {
         Card card = controller.getCards().get(Long.parseLong(cardNumber.getText()));
 
         //FILL IN THE NUMBER
-        String cardNumberFormated = getCardNumber(card);
+        String cardNumberFormated = getCardNumberFormated(card);
 
         //Dear
         JLabel labelDear = new JLabel("Dear "+ card.getOwner() , JLabel.CENTER);
@@ -1050,17 +1046,29 @@ public class FrameManager extends JFrame {
         });
     }
 
-    private String getCardNumber(Card card) {
+    // METHOD THAT RETURN THE LAST 4 DIGITS OF A CARD
+    private String getCardNumberFormated(Card card) {
         long number = card.getId();
 
         StringBuilder cardNum = new StringBuilder();
         //FILL IN THE NUMBER
         String cardNumberFormated = Long.toString(number);
 
-        for(int i=0; i<(4-cardNumberFormated.length());i++) {
-            cardNum.append("0");
+        int isFormateable = cardNumberFormated.length() - 4;
+
+        if (isFormateable > 0) {
+            for(int i = isFormateable; i < cardNumberFormated.length();i++) {
+                cardNum.append(cardNumberFormated.charAt(i));
+            }
+            return cardNum.toString();
         }
-        return cardNum.append(cardNumberFormated).toString();
+
+        else {
+            for (int i = 0; i < 4 - cardNumberFormated.length(); i++) {
+                cardNum.append("0");
+            }
+            return cardNum.append(cardNumberFormated).toString();
+        }
     }
 }
 

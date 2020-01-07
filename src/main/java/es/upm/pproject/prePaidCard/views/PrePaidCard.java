@@ -4,13 +4,7 @@ import es.upm.pproject.prePaidCard.controllers.Controller;
 import es.upm.pproject.prePaidCard.model.PrePaidCardInterface;
 import es.upm.pproject.prePaidCard.model.PrePaidCardManager;
 
-import java.awt.*;
-
-
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-
 
 public class PrePaidCard {
     public static void main(String[] args) {
@@ -19,7 +13,5 @@ public class PrePaidCard {
             Controller controller = new Controller(model);
             FrameManager view = new FrameManager(controller);
         });
-
     }
-
 }

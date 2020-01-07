@@ -29,6 +29,13 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 		if (getStoredCards) readStorageFile();
     }
 
+    public static void main(String [] args) throws WrongPINException {
+		PrePaidCardManager pre = new PrePaidCardManager(true);
+		for (int i = 0; i < 9001; i++) {
+			System.out.println(i);
+			pre.buyCard("javi", 200, "1111");
+		}
+	}
     // method to register a new card for a user
     public long buyCard(String owner, long balance, String pin) throws WrongPINException {
 		if (pin.length() != 4) {
