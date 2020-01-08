@@ -56,12 +56,9 @@ public class FrameManager extends JFrame {
         buttonBuyCard.setFont(new Font("Consolas", Font.BOLD, 28));
         buttonBuyCard.setBackground(Color.WHITE);
         buttonBuyCard.setBounds(300, 30, 400, 100);
-        buttonBuyCard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.setVisible(false);
-                buyCardView();
-            }
+        buttonBuyCard.addActionListener(event -> {
+            mainWindow.setVisible(false);
+            buyCardView();
         });
         mainWindow.add(buttonBuyCard);
 
@@ -71,12 +68,9 @@ public class FrameManager extends JFrame {
         buttonChargeCard.setFont(new Font("Consolas", Font.BOLD, 28));
         buttonChargeCard.setBackground(Color.WHITE);
         buttonChargeCard.setBounds(300, 150, 400, 100);
-        buttonChargeCard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.setVisible(false);
-                chargeCardView();
-            }
+        buttonChargeCard.addActionListener(event -> {
+            mainWindow.setVisible(false);
+            chargeCardView();
         });
         mainWindow.add(buttonChargeCard);
 
@@ -86,12 +80,9 @@ public class FrameManager extends JFrame {
         buttonPayCard.setFont(new Font("Consolas", Font.BOLD, 28));
         buttonPayCard.setBackground(Color.WHITE);
         buttonPayCard.setBounds(300, 270, 400, 100);
-        buttonPayCard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.setVisible(false);
-                payCardView();
-            }
+        buttonPayCard.addActionListener(event -> {
+            mainWindow.setVisible(false);
+            payCardView();
         });
         mainWindow.add(buttonPayCard);
 
@@ -101,12 +92,9 @@ public class FrameManager extends JFrame {
         buttonChangePin.setFont(new Font("Consolas", Font.BOLD, 28));
         buttonChangePin.setBackground(Color.WHITE);
         buttonChangePin.setBounds(300, 390, 400, 100);
-        buttonChangePin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.setVisible(false);
-                changePinView();
-            }
+        buttonChangePin.addActionListener(event -> {
+            mainWindow.setVisible(false);
+            changePinView();
         });
         mainWindow.add(buttonChangePin);
 
@@ -116,12 +104,9 @@ public class FrameManager extends JFrame {
         buttonConsultMovements.setFont(new Font("Consolas", Font.BOLD, 28));
         buttonConsultMovements.setBackground(Color.WHITE);
         buttonConsultMovements.setBounds(300, 510, 400, 100);
-        buttonConsultMovements.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.setVisible(false);
-                consultMovementsView();
-            }
+        buttonConsultMovements.addActionListener(event -> {
+            mainWindow.setVisible(false);
+            consultMovementsView();
         });
         mainWindow.add(buttonConsultMovements);
 
@@ -207,12 +192,9 @@ public class FrameManager extends JFrame {
         buttonContinue.setBackground(Color.WHITE);
         buttonContinue.setBounds(300, 550, 400, 100);
         windowBuyCard.add(buttonContinue);
-        buttonContinue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buyCardContinue();
-                windowBuyCard.setVisible(false);
-            }
+        buttonContinue.addActionListener(event -> {
+            buyCardContinue();
+            windowBuyCard.setVisible(false);
         });
     }
     
@@ -282,12 +264,9 @@ public class FrameManager extends JFrame {
         buttonHome.setBackground(Color.WHITE);
         buttonHome.setBounds(300, 550, 400, 100);
         windowBuyCardContinue.add(buttonHome);
-        buttonHome.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainWindow.setVisible(true);
-                windowBuyCardContinue.setVisible(false);
-            }
+        buttonHome.addActionListener(event -> {
+            mainWindow.setVisible(true);
+            windowBuyCardContinue.setVisible(false);
         });
     }
 
@@ -360,12 +339,9 @@ public class FrameManager extends JFrame {
         buttonContinue.setBackground(Color.WHITE);
         buttonContinue.setBounds(300, 550, 400, 100);
         windowChargeCard.add(buttonContinue);
-        buttonContinue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                windowChargeCard.setVisible(false);
-                chargeContinue();
-            }
+        buttonContinue.addActionListener(event -> {
+            windowChargeCard.setVisible(false);
+            chargeContinue();
         });
     }
 
@@ -446,12 +422,9 @@ public class FrameManager extends JFrame {
         buttonHome.setBackground(Color.WHITE);
         buttonHome.setBounds(300, 550, 400, 100);
         windowChargeContinue.add(buttonHome);
-        buttonHome.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                windowChargeContinue.setVisible(false);
-                mainWindow.setVisible(true);
-            }
+        buttonHome.addActionListener(event -> {
+            windowChargeContinue.setVisible(false);
+            mainWindow.setVisible(true);
         });
     }
 
@@ -524,12 +497,9 @@ public class FrameManager extends JFrame {
         buttonContinue.setBackground(Color.WHITE);
         buttonContinue.setBounds(300, 550, 400, 100);
         windowPayCard.add(buttonContinue);
-        buttonContinue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                windowPayCard.setVisible(false);
-                payCardContinue();
-            }
+        buttonContinue.addActionListener(event -> {
+            windowPayCard.setVisible(false);
+            payCardContinue();
         });
     }
 
@@ -615,11 +585,9 @@ public class FrameManager extends JFrame {
         buttonHome.setBackground(Color.WHITE);
         buttonHome.setBounds(300, 550, 400, 100);
         windowPayContinue.add(buttonHome);
-        buttonHome.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                windowPayContinue.setVisible(false);
-                mainWindow.setVisible(true);
-            }
+        buttonHome.addActionListener(event -> {
+            windowPayContinue.setVisible(false);
+            mainWindow.setVisible(true);
         });
     }
 
@@ -692,12 +660,9 @@ public class FrameManager extends JFrame {
         buttonContinue.setBackground(Color.WHITE);
         buttonContinue.setBounds(300, 550, 400, 100);
         windowChangePin.add(buttonContinue);
-        buttonContinue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                windowChangePin.setVisible(false);
-                changePinContinue();
-            }
+        buttonContinue.addActionListener(event -> {
+            windowChangePin.setVisible(false);
+            changePinContinue();
         });
     }
 
@@ -744,12 +709,9 @@ public class FrameManager extends JFrame {
         buttonHome.setBackground(Color.WHITE);
         buttonHome.setBounds(300, 550, 400, 100);
         windowPinContinue.add(buttonHome);
-        buttonHome.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                windowPinContinue.setVisible(false);
-                mainWindow.setVisible(true);
-            }
+        buttonHome.addActionListener(event -> {
+            windowPinContinue.setVisible(false);
+            mainWindow.setVisible(true);
         });
 
     }
@@ -812,12 +774,9 @@ public class FrameManager extends JFrame {
         buttonContinue.setBackground(Color.WHITE);
         buttonContinue.setBounds(300, 550, 400, 100);
         windowConsultMovements.add(buttonContinue);
-        buttonContinue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                windowConsultMovements.setVisible(false);
-                consultMovemetsContinue();
-            }
+        buttonContinue.addActionListener(event -> {
+            windowConsultMovements.setVisible(false);
+            consultMovemetsContinue();
         });
     }
 
@@ -893,12 +852,9 @@ public class FrameManager extends JFrame {
         buttonHome.setBackground(Color.WHITE);
         buttonHome.setBounds(300, 550, 400, 100);
         windowMovementsContinue.add(buttonHome);
-        buttonHome.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                windowMovementsContinue.setVisible(false);
-                mainWindow.setVisible(true);
-            }
+        buttonHome.addActionListener(event -> {
+            windowMovementsContinue.setVisible(false);
+            mainWindow.setVisible(true);
         });
     }
 
@@ -961,12 +917,9 @@ public class FrameManager extends JFrame {
         buttonContinue.setBackground(Color.WHITE);
         buttonContinue.setBounds(300, 550, 400, 100);
         windowConsultBalance.add(buttonContinue);
-        buttonContinue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                windowConsultBalance.setVisible(false);
-                consultBalanceContinue();
-            }
+        buttonContinue.addActionListener(event -> {
+            windowConsultBalance.setVisible(false);
+            consultBalanceContinue();
         });
     }
 
@@ -1037,12 +990,9 @@ public class FrameManager extends JFrame {
         buttonHome.setBackground(Color.WHITE);
         buttonHome.setBounds(300, 550, 400, 100);
         windowBalanceContinue.add(buttonHome);
-        buttonHome.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                windowBalanceContinue.setVisible(false);
-                mainWindow.setVisible(true);
-            }
+        buttonHome.addActionListener(event -> {
+            windowBalanceContinue.setVisible(false);
+            mainWindow.setVisible(true);
         });
     }
 
