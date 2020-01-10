@@ -90,4 +90,15 @@ public class AppTest {
        	long idExc = Long.valueOf(1000000);
     	Assertions.assertThrows(CardDoesntExistException.class, () -> {test.consultMovements(idExc, "1111");});
     }
+
+    @Test
+    public void test8(){
+      test = new PrePaidCardManager(true);
+      if (!test.getCards().isEmpty()){
+        Card card = test.getCards().get(Long.valueOf(1));
+        Assertions.assertEquals(card.getId(),Long.valueOf(1));
+        Assertions.assertEquals(card.getOwner(),"javi");
+        Assertions.assertEquals(card.getBalance(),Long.valueOf(200));
+      }
+    }
 }
