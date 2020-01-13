@@ -4,8 +4,6 @@ import es.upm.pproject.prePaidCard.controllers.Controller;
 import es.upm.pproject.prePaidCard.model.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class FrameManager extends JFrame {

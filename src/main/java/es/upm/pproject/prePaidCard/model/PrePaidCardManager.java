@@ -21,7 +21,7 @@ public class PrePaidCardManager implements PrePaidCardInterface {
 
     private long cardNumber = 0;
     private HashMap<Long, Card> cards = new HashMap<>();
-	private final static Logger LOGGER = Logger.getLogger("Manager");
+	private static final Logger LOGGER = Logger.getLogger("Manager");
 	private Cipher cipherMethod = new Cipher();
 
 
