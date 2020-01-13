@@ -16,7 +16,7 @@
 <sonar.projectKey>
 ${project.groupId}:${project.artifactId}:${sonar.projectName}
 </sonar.projectKey>
-<sonar.coverage.exclusions>**/views/*,**/controllers/*,**/model/Cipher.java</sonar.coverage.exclusions>
+<sonar.coverage.exclusions>**/views/*,**/controllers/*,**/model/Cipher.java, **model/ExpiredCardException.java</sonar.coverage.exclusions>
 </properties>
 <dependencies>
 <dependency>

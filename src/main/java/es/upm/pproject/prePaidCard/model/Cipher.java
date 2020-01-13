@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class Cipher {
 
-    private final static Logger LOGGER = Logger.getLogger("Cipher");
+    private static final Logger LOGGER = Logger.getLogger("Cipher");
 
     public String cipher(String passwordToHash) {
         try {

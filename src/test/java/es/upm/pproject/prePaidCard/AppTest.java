@@ -92,11 +92,12 @@ public class AppTest {
     }
 
     @Test
-    public void test8(){
-      test = new PrePaidCardManager(true);
+    public void test8() throws WrongPINException {
+      test.buyCard("javi", 200, "1111");
+
       if (!test.getCards().isEmpty()){
-        Card card = test.getCards().get(Long.valueOf(1));
-        Assertions.assertEquals(card.getId(),Long.valueOf(1));
+        Card card = test.getCards().get(Long.valueOf(0));
+        Assertions.assertEquals(card.getId(),Long.valueOf(0));
         Assertions.assertEquals(card.getOwner(),"javi");
         Assertions.assertEquals(card.getBalance(),Long.valueOf(200));
       }
