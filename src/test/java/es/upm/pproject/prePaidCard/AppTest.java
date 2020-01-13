@@ -14,12 +14,13 @@ public class AppTest {
 
 	@BeforeEach
     public void testApp() {
-		test = new PrePaidCardManager(false);
+		test = new PrePaidCardManager(true);
 	}
 
     @Test
 	public void test1() {
-    	Assertions.assertEquals(test.getCards(), new HashMap<>());
+		test = new PrePaidCardManager(false);
+		Assertions.assertEquals(test.getCards(), new HashMap<>());
 	}
 
     @Test
@@ -93,6 +94,7 @@ public class AppTest {
 
     @Test
     public void test8() throws WrongPINException {
+	  test = new PrePaidCardManager(false);
       test.buyCard("javi", 200, "1111");
 
       if (!test.getCards().isEmpty()){
