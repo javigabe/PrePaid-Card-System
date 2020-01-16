@@ -1,6 +1,7 @@
 package es.upm.pproject.prePaidCard;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import es.upm.pproject.prePaidCard.model.*;
 import org.junit.jupiter.api.*;
@@ -10,7 +11,9 @@ import org.junit.jupiter.api.*;
  */
 public class AppTest {
 
-  private PrePaidCardManager test;
+  	private PrePaidCardManager test;
+  	private Cipher cipherMethod = new Cipher();
+
 
 	@BeforeEach
     public void testApp() {
@@ -104,4 +107,13 @@ public class AppTest {
         Assertions.assertEquals(card.getBalance(),Long.valueOf(200));
       }
     }
+
+    @Test
+    public void test9() throws WrongPINException, ExpiredCardException, CardDoesntExistException, NotEnoughMoneyException {
+		Card card = new Card((long) 0, (long) 200, cipherMethod.cipher("1111"), "date date", new Date());
+		Date exDate = new Date();
+		exDate.setYear(exDate.getYear() + 2);
+		Assertions.assertThrows(ExpiredCardException.class, () -> {card.pay("1111", (long) 10, exDate);});
+		Assertions.assertThrows(ExpiredCardException.class, () -> {card.charge("1111", (long) 10, exDate);});
+	}
 }
