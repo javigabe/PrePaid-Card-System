@@ -11,7 +11,7 @@ public class PrePaidCard {
         EventQueue.invokeLater(() -> {
             PrePaidCardInterface model = new PrePaidCardManager(true);
             Controller controller = new Controller(model);
-            FrameManager view = new FrameManager(controller);
+            new FrameManager(controller);
         });
     }
 }
