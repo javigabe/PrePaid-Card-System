@@ -72,7 +72,15 @@ To launch the graphic interface run "PrePaidCard.java" in src/main/views package
 
 - Exceptions.
 
+## **Content src/main/controllers**
+
+- Controller: performs the operations requested by the graphic interface.
+
+## **Content src/main/views**
+
+- PrePaidCard: launches the system.
+- FrameManager: contains all the JFrame structure.
 
 
-## **Contenido src/test**
-- AppTest -> En este fichero se han implementado todos los test para el proyecto
+## **Content src/test**
+- AppTest -> File containing all the tests for the project
