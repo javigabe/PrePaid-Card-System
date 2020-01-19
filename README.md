@@ -40,7 +40,7 @@ WrongPINException: This exception will be lauched when the pin is incorrect.
 
 ## **Instructions**
 
-To execute all the tests you may have Maven installed and execute the command "mvn test"
+To execute all the tests you may have Maven installed and execute the command "mvn test". \n
 To launch the graphic interface run "PrePaidCard.java" in src/main/views package.
 
 ## **Content src/main/model**
