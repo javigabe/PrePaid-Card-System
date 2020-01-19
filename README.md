@@ -36,6 +36,7 @@ WrongPINException: This exception will be lauched when the pin is incorrect.
 - pom.xml -> config file for the project
 - README.md -> file with project description
 - .gitignore -> ignored files by the repository
+- .data.json -> file where all the cards are stored
 
 ## **Instructions**
 
@@ -51,6 +52,7 @@ To launch the graphic interface run "PrePaidCard.java" in src/main/views package
   * changePin: Checks if the card is already in the system and if the new pin's format is correct, then call the card method to change the pin (changePin).
   * consultMovements:  Checks if the card is already in the system and call the card method to consult the movements (consultMovements). Return the list of the movements done with the card.
   * consultBalance: Checks if the card is already in the system and call the card method to consult the balance (consultBalance). Return the balance.
+  * It has private methods to store and read cards from the storage file
 
 
 - Card: the class to save the cards and operate with them. It has the following methods.
@@ -83,4 +85,4 @@ To launch the graphic interface run "PrePaidCard.java" in src/main/views package
 
 
 ## **Content src/test**
-- AppTest -> File containing all the tests for the project
+- AppTest -> file containing all the tests for the project
