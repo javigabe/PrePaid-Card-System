@@ -5,7 +5,6 @@
 - pom.xml -> config file for the project
 - README.md -> file with project description
 - .gitignore -> ignored files by the repository
-- .data.json -> file where all the cards are stored
 
 ## **Instructions**
 
